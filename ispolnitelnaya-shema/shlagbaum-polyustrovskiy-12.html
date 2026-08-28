@@ -1,0 +1,621 @@
+<title>Схема траншеи Полюстровский 12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Sans+Narrow:wght@400;700&family=PT+Mono&display=swap">
+
+<style>
+:root{
+  --paper:#FBFAF6;
+  --sheet:#FFFFFF;
+  --ink:#15181B;
+  --ink-2:#535C63;
+  --ink-3:#7C868D;
+  --rule:#C6C4BA;
+  --rule-hair:#DEDCD3;
+  --rule-strong:#22282D;
+  --accent:#1B4E75;
+  --accent-soft:#E4EDF4;
+  --mat-asphalt:#454A4E;
+  --mat-asphalt-new:#5C6266;
+  --mat-gravel:#A2A8AC;
+  --mat-sand:#DCBB6A;
+  --mat-ground:#BCAD92;
+  --mat-line:#3A4046;
+  --pipe-fill:#FFFFFF;
+  --pipe-line:#1F2429;
+  --warn:#8A4B12;
+  --warn-bg:#F6ECDF;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1317;
+    --sheet:#151B21;
+    --ink:#E7EBEE;
+    --ink-2:#9EAAB3;
+    --ink-3:#76828B;
+    --rule:#2E3941;
+    --rule-hair:#232C33;
+    --rule-strong:#C4CED5;
+    --accent:#79B0DE;
+    --accent-soft:#17242F;
+    --mat-asphalt:#2C3135;
+    --mat-asphalt-new:#3B4247;
+    --mat-gravel:#727A80;
+    --mat-sand:#B3934A;
+    --mat-ground:#5F5949;
+    --mat-line:#94A0A8;
+    --pipe-fill:#0E1317;
+    --pipe-line:#C4CED5;
+    --warn:#E0A96A;
+    --warn-bg:#211A11;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1317;
+  --sheet:#151B21;
+  --ink:#E7EBEE;
+  --ink-2:#9EAAB3;
+  --ink-3:#76828B;
+  --rule:#2E3941;
+  --rule-hair:#232C33;
+  --rule-strong:#C4CED5;
+  --accent:#79B0DE;
+  --accent-soft:#17242F;
+  --mat-asphalt:#2C3135;
+  --mat-asphalt-new:#3B4247;
+  --mat-gravel:#727A80;
+  --mat-sand:#B3934A;
+  --mat-ground:#5F5949;
+  --mat-line:#94A0A8;
+  --pipe-fill:#0E1317;
+  --pipe-line:#C4CED5;
+  --warn:#E0A96A;
+  --warn-bg:#211A11;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"PT Sans","Segoe UI",Arial,sans-serif;
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.sheet{
+  max-width:196mm;
+  margin:0 auto;
+  padding:10mm 9mm 12mm;
+  background:var(--sheet);
+  border:1px solid var(--rule);
+  display:flex;
+  flex-direction:column;
+  gap:9mm;
+}
+
+/* ---------- шапка ---------- */
+.head{display:flex;flex-direction:column;gap:10px}
+.stamp-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  gap:16px;flex-wrap:wrap;
+  font-family:"PT Sans Narrow","PT Sans",Arial,sans-serif;
+  text-transform:uppercase;letter-spacing:.13em;font-size:11px;color:var(--ink-3);
+  border-bottom:2px solid var(--rule-strong);padding-bottom:6px;
+}
+h1{
+  font-family:"PT Sans Narrow","PT Sans",Arial,sans-serif;
+  font-size:30px;line-height:1.1;font-weight:700;margin:2px 0 0;
+  text-wrap:balance;letter-spacing:.01em;
+}
+.subtitle{font-size:15px;color:var(--ink-2);margin:0;max-width:62ch}
+.meta{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0 22px;margin-top:4px;border-top:1px solid var(--rule-hair);
+}
+.meta div{
+  display:grid;grid-template-columns:34% 1fr;gap:10px;
+  padding:5px 0;border-bottom:1px solid var(--rule-hair);font-size:13.5px;
+}
+.meta dt,.meta .k{
+  font-family:"PT Sans Narrow","PT Sans",Arial,sans-serif;
+  text-transform:uppercase;letter-spacing:.07em;font-size:11px;
+  color:var(--ink-3);align-self:center;
+}
+.meta .v{color:var(--ink)}
+.blank{border-bottom:1px solid var(--rule);min-height:1.35em;display:block}
+
+/* ---------- блоки чертежа ---------- */
+.plate{display:flex;flex-direction:column;gap:8px}
+.plate-head{
+  display:flex;align-items:baseline;gap:12px;
+  border-bottom:1px solid var(--rule);padding-bottom:5px;
+}
+.plate-num{
+  font-family:"PT Mono","SFMono-Regular",monospace;font-size:12px;
+  color:var(--sheet);background:var(--rule-strong);
+  padding:2px 7px;letter-spacing:.06em;
+}
+.plate-title{
+  font-family:"PT Sans Narrow","PT Sans",Arial,sans-serif;font-weight:700;
+  font-size:17px;text-transform:uppercase;letter-spacing:.06em;
+}
+.plate-note{margin-left:auto;font-size:12px;color:var(--ink-3);font-style:italic}
+.canvas{overflow-x:auto;padding:2px 0}
+.canvas svg{display:block;width:100%;min-width:520px;height:auto}
+.canvas.narrow{display:flex;justify-content:center;overflow-x:auto}
+.canvas.narrow svg{max-width:420px;min-width:340px}
+
+/* элементы черчения */
+.dimline{stroke:var(--accent);stroke-width:1;fill:none}
+.extline{stroke:var(--accent);stroke-width:.7;fill:none;stroke-dasharray:4 3}
+.dimtext{fill:var(--accent);font-family:"PT Mono",monospace;font-size:13px}
+.matline{stroke:var(--mat-line);stroke-width:1.2;fill:none}
+.cutline{stroke:var(--rule-strong);stroke-width:2.2;fill:none}
+.lbl{fill:var(--ink-2);font-family:"PT Sans Narrow","PT Sans",sans-serif;font-size:13px}
+.lbl-s{fill:var(--ink-3);font-family:"PT Sans Narrow","PT Sans",sans-serif;font-size:12px}
+.posc{fill:var(--sheet);stroke:var(--rule-strong);stroke-width:1.3}
+.post{fill:var(--ink);font-family:"PT Mono",monospace;font-size:13px;text-anchor:middle}
+.leader{stroke:var(--rule-strong);stroke-width:.9;fill:none}
+
+/* ---------- экспликация ---------- */
+.legend{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:4px 26px;list-style:none;padding:0;margin:0;
+}
+.legend li{
+  display:grid;grid-template-columns:26px 1fr;gap:9px;align-items:start;
+  padding:6px 0;border-bottom:1px solid var(--rule-hair);font-size:13.5px;
+}
+.legend > li > b{
+  font-family:"PT Mono",monospace;font-weight:400;font-size:12px;
+  border:1px solid var(--rule-strong);border-radius:50%;
+  width:22px;height:22px;display:grid;place-items:center;color:var(--ink);
+  margin-top:1px;
+}
+.legend span b{font-weight:700;color:var(--ink)}
+.legend .sw{
+  width:22px;height:22px;border:1px solid var(--mat-line);
+}
+
+/* ---------- таблицы ---------- */
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+caption{text-align:left;font-size:0;height:0}
+th,td{border:1px solid var(--rule);padding:5px 8px;vertical-align:top}
+thead th{
+  background:var(--accent-soft);color:var(--ink);
+  font-family:"PT Sans Narrow","PT Sans",Arial,sans-serif;font-weight:700;
+  font-size:12px;text-transform:uppercase;letter-spacing:.05em;line-height:1.25;
+}
+td.n,th.n{text-align:right;font-family:"PT Mono",monospace;font-size:12.5px;white-space:nowrap}
+td.c{text-align:center}
+tbody tr.total td{font-weight:700;background:var(--accent-soft)}
+.delta-neg{color:var(--warn)}
+.tbl-wrap{overflow-x:auto}
+
+/* ---------- примечания ---------- */
+.notes{counter-reset:n;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.notes li{
+  counter-increment:n;position:relative;padding-left:26px;font-size:13.5px;color:var(--ink-2);
+}
+.notes li::before{
+  content:counter(n)".";position:absolute;left:0;top:0;
+  font-family:"PT Mono",monospace;font-size:12px;color:var(--accent);
+}
+.notes b{color:var(--ink)}
+.flag{
+  background:var(--warn-bg);border-left:3px solid var(--warn);
+  padding:9px 12px;font-size:13.5px;color:var(--ink);
+}
+.flag b{color:var(--warn)}
+
+/* ---------- подписи ---------- */
+.sign{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10mm 24px}
+.sign .who{
+  font-family:"PT Sans Narrow","PT Sans",Arial,sans-serif;text-transform:uppercase;
+  letter-spacing:.07em;font-size:11px;color:var(--ink-3);
+}
+.sign .line{border-bottom:1px solid var(--rule-strong);height:26px;margin-top:14px}
+.sign .cap{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);padding-top:3px}
+
+/* ---------- основная надпись ---------- */
+.titleblock{
+  border:2px solid var(--rule-strong);
+  display:grid;grid-template-columns:1.6fr 1fr;
+}
+.titleblock > div{padding:7px 10px}
+.titleblock .left{border-right:1px solid var(--rule-strong)}
+.tb-k{
+  font-family:"PT Sans Narrow","PT Sans",Arial,sans-serif;text-transform:uppercase;
+  letter-spacing:.08em;font-size:10px;color:var(--ink-3);display:block;
+}
+.tb-v{font-size:13px;line-height:1.35}
+.tb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+
+@media (max-width:760px){
+  .meta,.legend,.sign{grid-template-columns:1fr}
+  .titleblock{grid-template-columns:1fr}
+  .titleblock .left{border-right:none;border-bottom:1px solid var(--rule-strong)}
+  h1{font-size:25px}
+}
+
+@media print{
+  @page{size:A4 portrait;margin:10mm}
+  body{background:#fff}
+  .sheet{border:none;max-width:none;padding:0;gap:6mm}
+  .plate,.sign,.titleblock,table,.legend li,.notes li{break-inside:avoid}
+  .canvas svg{min-width:0}
+  .canvas.narrow svg{max-width:96mm}
+  .head{gap:6px}
+  h1{font-size:24px}
+  .meta div{padding:3px 0}
+  .flag{break-inside:avoid}
+}
+</style>
+
+<div class="sheet">
+
+  <!-- ======================= ШАПКА ======================= -->
+  <header class="head">
+    <div class="stamp-row">
+      <span>ГБУЗ «Ленинградская областная клиническая больница»</span>
+      <span>Исполнительная документация</span>
+    </div>
+    <h1>Исполнительная схема траншеи под кабельную линию шлагбаума</h1>
+    <p class="subtitle">Текущий ремонт шлагбаума: разработка траншеи, прокладка труб, обратная засыпка и восстановление асфальтобетонного покрытия. Схема составлена по фактически выполненным работам.</p>
+    <div class="meta">
+      <div><span class="k">Объект</span><span class="v">Здание ГБУЗ ЛОКБ, текущий ремонт шлагбаума</span></div>
+      <div><span class="k">Адрес</span><span class="v">г. Санкт-Петербург, Полюстровский пр., д. 12</span></div>
+      <div><span class="k">Основание</span><span class="v">Ведомость объёмов работ № 1 от 10.07.2025, поз. 5–9, 16</span></div>
+      <div><span class="k">Смета</span><span class="v">Локальный сметный расчёт 02-01-01 «Шлагбаумы»</span></div>
+      <div><span class="k">Заказчик</span><span class="v">ГБУЗ ЛОКБ</span></div>
+      <div><span class="k">Подрядчик</span><span class="v blank"></span></div>
+      <div><span class="k">Дата съёмки</span><span class="v">«____» ______________ 20____ г.</span></div>
+      <div><span class="k">Стадия</span><span class="v">Исполнительная документация</span></div>
+    </div>
+  </header>
+
+  <!-- ======================= ПЛАН ======================= -->
+  <section class="plate">
+    <div class="plate-head">
+      <span class="plate-num">Л1</span>
+      <span class="plate-title">План трассы траншеи</span>
+      <span class="plate-note">размеры в мм; ширина траншеи на плане показана условно</span>
+    </div>
+    <div class="canvas">
+      <svg viewBox="0 0 980 250" role="img" aria-label="План траншеи длиной 12000 мм между фундаментом шлагбаума и фундаментом стойки фотоэлемента">
+        <defs>
+          <pattern id="pl-hatch" width="9" height="9" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="9" stroke="var(--mat-line)" stroke-width="1"/>
+          </pattern>
+          <marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+            <path d="M0,0 L9,4.5 L0,9 z" fill="var(--accent)"/>
+          </marker>
+          <marker id="ar-b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+            <path d="M0,0 L9,4.5 L0,9 z" fill="var(--rule-strong)"/>
+          </marker>
+        </defs>
+
+        <!-- существующее покрытие -->
+        <rect x="40" y="88" width="900" height="86" fill="var(--mat-asphalt)" opacity=".16"/>
+        <text class="lbl-s" x="46" y="190">существующее а/б покрытие проезда</text>
+
+        <!-- траншея -->
+        <rect x="120" y="118" width="740" height="26" fill="url(#pl-hatch)" opacity=".55"/>
+        <rect x="120" y="118" width="740" height="26" fill="none" stroke="var(--mat-line)" stroke-width="1.4"/>
+
+        <!-- фундаменты -->
+        <rect x="104" y="115" width="32" height="32" fill="var(--sheet)" stroke="var(--rule-strong)" stroke-width="1.6"/>
+        <rect x="844" y="115" width="32" height="32" fill="var(--sheet)" stroke="var(--rule-strong)" stroke-width="1.6"/>
+        <line x1="104" y1="115" x2="136" y2="147" class="matline"/>
+        <line x1="844" y1="115" x2="876" y2="147" class="matline"/>
+
+        <text class="lbl" x="120" y="72" text-anchor="middle">Шлагбаум</text>
+        <text class="lbl-s" x="120" y="88" text-anchor="middle">фундамент 500×500×500, демонтаж</text>
+        <text class="lbl-s" x="120" y="102" text-anchor="middle">с обратным монтажом (поз. 1, 4, 21)</text>
+
+        <text class="lbl" x="860" y="72" text-anchor="middle">Стойка фотоэлемента</text>
+        <text class="lbl-s" x="860" y="88" text-anchor="middle">фундамент Ф2 500×500×300</text>
+        <text class="lbl-s" x="860" y="102" text-anchor="middle">(поз. 14, 22)</text>
+
+        <!-- линия разреза 1-1 -->
+        <line x1="490" y1="96" x2="490" y2="166" class="cutline"/>
+        <line x1="490" y1="96" x2="512" y2="96" class="cutline" marker-end="url(#ar-b)"/>
+        <line x1="490" y1="166" x2="512" y2="166" class="cutline" marker-end="url(#ar-b)"/>
+        <text class="post" x="478" y="92">1</text>
+        <text class="post" x="478" y="180">1</text>
+
+        <!-- размер длины -->
+        <line x1="120" y1="212" x2="860" y2="212" class="dimline" marker-start="url(#ar)" marker-end="url(#ar)"/>
+        <line x1="120" y1="150" x2="120" y2="218" class="extline"/>
+        <line x1="860" y1="150" x2="860" y2="218" class="extline"/>
+        <rect x="452" y="198" width="76" height="19" fill="var(--sheet)"/>
+        <text class="dimtext" x="490" y="212" text-anchor="middle">12 000</text>
+        <text class="lbl-s" x="490" y="236" text-anchor="middle">длина траншеи, факт</text>
+
+        <!-- выноска ширины -->
+        <line x1="300" y1="131" x2="300" y2="60" class="leader"/>
+        <line x1="300" y1="60" x2="352" y2="60" class="leader"/>
+        <text class="lbl" x="358" y="65">b = 250 — ширина траншеи</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ======================= РАЗРЕЗ ======================= -->
+  <section class="plate">
+    <div class="plate-head">
+      <span class="plate-num">Л2</span>
+      <span class="plate-title">Разрез 1—1</span>
+      <span class="plate-note">размеры в мм; отметки условные, 0,000 — верх существующего покрытия</span>
+    </div>
+    <div class="canvas narrow">
+      <svg viewBox="0 0 700 660" role="img" aria-label="Поперечный разрез траншеи шириной 250 мм и глубиной 600 мм: песок 200 мм, щебень 250 мм, холодный асфальт 150 мм">
+        <defs>
+          <pattern id="gr-hatch" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <rect width="10" height="10" fill="var(--mat-ground)" opacity=".35"/>
+            <line x1="0" y1="0" x2="0" y2="10" stroke="var(--mat-line)" stroke-width=".9" opacity=".6"/>
+          </pattern>
+          <pattern id="sand-p" width="14" height="14" patternUnits="userSpaceOnUse">
+            <rect width="14" height="14" fill="var(--mat-sand)" opacity=".45"/>
+            <circle cx="3" cy="4" r="1.1" fill="var(--mat-line)" opacity=".65"/>
+            <circle cx="10" cy="9" r="1.1" fill="var(--mat-line)" opacity=".65"/>
+            <circle cx="7" cy="1.5" r=".9" fill="var(--mat-line)" opacity=".45"/>
+          </pattern>
+          <pattern id="grav-p" width="18" height="18" patternUnits="userSpaceOnUse">
+            <rect width="18" height="18" fill="var(--mat-gravel)" opacity=".38"/>
+            <path d="M2 6 L7 3 L9 8 Z" fill="none" stroke="var(--mat-line)" stroke-width="1"/>
+            <path d="M11 14 L16 11 L17 16 Z" fill="none" stroke="var(--mat-line)" stroke-width="1"/>
+            <path d="M12 2 L16 5 L11 6 Z" fill="none" stroke="var(--mat-line)" stroke-width="1"/>
+          </pattern>
+          <pattern id="asph-p" width="8" height="8" patternUnits="userSpaceOnUse">
+            <rect width="8" height="8" fill="var(--mat-asphalt-new)"/>
+            <circle cx="2" cy="2" r=".8" fill="#fff" opacity=".22"/>
+            <circle cx="6" cy="5" r=".7" fill="#fff" opacity=".18"/>
+          </pattern>
+          <marker id="ar2" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+            <path d="M0,0 L9,4.5 L0,9 z" fill="var(--accent)"/>
+          </marker>
+        </defs>
+
+        <!-- существующий массив: покрытие + грунт -->
+        <rect x="40" y="100" width="210" height="120" fill="var(--mat-asphalt)" opacity=".5"/>
+        <rect x="450" y="100" width="210" height="120" fill="var(--mat-asphalt)" opacity=".5"/>
+        <rect x="40" y="220" width="210" height="390" fill="url(#gr-hatch)"/>
+        <rect x="450" y="220" width="210" height="390" fill="url(#gr-hatch)"/>
+
+        <!-- слои в траншее -->
+        <rect x="250" y="100" width="200" height="120" fill="url(#asph-p)"/>
+        <rect x="250" y="220" width="200" height="200" fill="url(#grav-p)"/>
+        <rect x="250" y="420" width="200" height="160" fill="url(#sand-p)"/>
+
+        <!-- контуры -->
+        <line x1="40" y1="100" x2="660" y2="100" stroke="var(--rule-strong)" stroke-width="2"/>
+        <path d="M250 100 L250 580 L450 580 L450 100" class="matline" stroke-width="1.8"/>
+        <line x1="250" y1="220" x2="450" y2="220" class="matline"/>
+        <line x1="250" y1="420" x2="450" y2="420" class="matline"/>
+        <line x1="40" y1="220" x2="250" y2="220" class="matline"/>
+        <line x1="450" y1="220" x2="660" y2="220" class="matline"/>
+
+        <!-- обрыв низа -->
+        <path d="M40 610 L120 604 L200 612 L280 604 L360 612 L440 604 L520 612 L600 604 L660 610"
+              fill="none" stroke="var(--mat-line)" stroke-width="1" stroke-dasharray="7 4"/>
+
+        <!-- трубы ПНД -->
+        <circle cx="318" cy="500" r="13" fill="var(--pipe-fill)" stroke="var(--pipe-line)" stroke-width="1.6"/>
+        <circle cx="318" cy="500" r="9.5" fill="none" stroke="var(--pipe-line)" stroke-width=".9"/>
+        <circle cx="382" cy="500" r="13" fill="var(--pipe-fill)" stroke="var(--pipe-line)" stroke-width="1.6"/>
+        <circle cx="382" cy="500" r="9.5" fill="none" stroke="var(--pipe-line)" stroke-width=".9"/>
+
+        <!-- позиции -->
+        <circle class="posc" cx="350" cy="160" r="14"/><text class="post" x="350" y="165">1</text>
+        <circle class="posc" cx="350" cy="315" r="14"/><text class="post" x="350" y="320">2</text>
+        <circle class="posc" cx="292" cy="548" r="14"/><text class="post" x="292" y="553">3</text>
+        <line x1="404" y1="452" x2="386" y2="490" class="leader"/>
+        <circle class="posc" cx="410" cy="443" r="14"/><text class="post" x="410" y="448">4</text>
+        <circle class="posc" cx="140" cy="160" r="14"/><text class="post" x="140" y="165">5</text>
+        <circle class="posc" cx="140" cy="330" r="14"/><text class="post" x="140" y="335">6</text>
+
+        <!-- размер ширины сверху -->
+        <line x1="250" y1="66" x2="450" y2="66" class="dimline" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+        <line x1="250" y1="60" x2="250" y2="96" class="extline"/>
+        <line x1="450" y1="60" x2="450" y2="96" class="extline"/>
+        <rect x="324" y="52" width="52" height="19" fill="var(--sheet)"/>
+        <text class="dimtext" x="350" y="66" text-anchor="middle">250</text>
+
+        <!-- цепочка толщин справа -->
+        <line x1="450" y1="100" x2="600" y2="100" class="extline"/>
+        <line x1="450" y1="220" x2="600" y2="220" class="extline"/>
+        <line x1="450" y1="420" x2="600" y2="420" class="extline"/>
+        <line x1="450" y1="580" x2="600" y2="580" class="extline"/>
+
+        <line x1="512" y1="100" x2="512" y2="220" class="dimline" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+        <rect x="490" y="150" width="46" height="19" fill="var(--sheet)"/>
+        <text class="dimtext" x="512" y="164" text-anchor="middle">150</text>
+
+        <line x1="512" y1="220" x2="512" y2="420" class="dimline" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+        <rect x="490" y="310" width="46" height="19" fill="var(--sheet)"/>
+        <text class="dimtext" x="512" y="324" text-anchor="middle">250</text>
+
+        <line x1="512" y1="420" x2="512" y2="580" class="dimline" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+        <rect x="490" y="490" width="46" height="19" fill="var(--sheet)"/>
+        <text class="dimtext" x="512" y="504" text-anchor="middle">200</text>
+
+        <!-- полная глубина -->
+        <line x1="586" y1="100" x2="586" y2="580" class="dimline" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+        <rect x="562" y="330" width="50" height="19" fill="var(--sheet)"/>
+        <text class="dimtext" x="586" y="344" text-anchor="middle">600</text>
+        <text class="lbl-s" x="620" y="344">H траншеи</text>
+
+        <!-- отметки слева -->
+        <g>
+          <line x1="250" y1="100" x2="196" y2="100" class="extline"/>
+          <path d="M196 100 L188 92 L188 108 Z" fill="var(--accent)"/>
+          <rect x="72" y="76" width="112" height="18" fill="var(--sheet)"/>
+          <text class="dimtext" x="182" y="90" text-anchor="end">0,000</text>
+          <text class="lbl-s" x="182" y="76" text-anchor="end">верх покрытия</text>
+        </g>
+        <g>
+          <line x1="250" y1="220" x2="196" y2="220" class="extline"/>
+          <path d="M196 220 L188 212 L188 228 Z" fill="var(--accent)"/>
+          <rect x="112" y="210" width="72" height="18" fill="var(--sheet)"/>
+          <text class="dimtext" x="182" y="224" text-anchor="end">−0,150</text>
+        </g>
+        <g>
+          <line x1="250" y1="420" x2="196" y2="420" class="extline"/>
+          <path d="M196 420 L188 412 L188 428 Z" fill="var(--accent)"/>
+          <rect x="112" y="410" width="72" height="18" fill="var(--sheet)"/>
+          <text class="dimtext" x="182" y="424" text-anchor="end">−0,400</text>
+        </g>
+        <g>
+          <line x1="250" y1="580" x2="196" y2="580" class="extline"/>
+          <path d="M196 580 L188 572 L188 588 Z" fill="var(--accent)"/>
+          <rect x="72" y="570" width="112" height="34" fill="var(--sheet)"/>
+          <text class="dimtext" x="182" y="584" text-anchor="end">−0,600</text>
+          <text class="lbl-s" x="182" y="600" text-anchor="end">дно траншеи</text>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ======================= ЭКСПЛИКАЦИЯ ======================= -->
+  <section class="plate">
+    <div class="plate-head">
+      <span class="plate-num">Л3</span>
+      <span class="plate-title">Экспликация конструкции</span>
+    </div>
+    <ul class="legend">
+      <li><b>1</b><span><b>Холодный асфальт, 150 мм</b> — восстановление дорожного покрытия с уплотнением заподлицо с существующим (поз. 9 ВОР).</span></li>
+      <li><b>2</b><span><b>Щебень фр. 5(3)—20, М600, 250 мм</b> — засыпка траншеи с послойной трамбовкой (поз. 8 ВОР).</span></li>
+      <li><b>3</b><span><b>Песок природный мелкий, 200 мм</b> — подсыпка основания и защитная засыпка труб с трамбовкой (поз. 6, 7 ВОР).</span></li>
+      <li><b>4</b><span><b>Труба гофрированная двустенная ПНД d32 (SN34), 2 шт.</b> — основная и резервная, укладка в песчаный слой (поз. 16 ВОР).</span></li>
+      <li><b>5</b><span>Существующее асфальтобетонное покрытие проезда; кромка реза — штробление на глубину 150 мм.</span></li>
+      <li><b>6</b><span>Существующий грунт основания (группа 2); стенки траншеи вертикальные, без крепления.</span></li>
+    </ul>
+  </section>
+
+  <!-- ======================= ФАКТИЧЕСКИЕ ОБЪЁМЫ ======================= -->
+  <section class="plate">
+    <div class="plate-head">
+      <span class="plate-num">Л4</span>
+      <span class="plate-title">Ведомость фактически выполненных объёмов</span>
+      <span class="plate-note">B = 0,25 м · H = 0,60 м · L = 12,00 м</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:34px">№</th>
+            <th>Наименование</th>
+            <th style="width:130px">Расчёт</th>
+            <th style="width:52px">Ед.</th>
+            <th class="n" style="width:74px">Объём</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="c">1</td><td>Разработка траншеи шириной 0,25 м и глубиной 0,6 м механизированным способом</td><td class="n">0,25×0,60×12,00</td><td class="c">м³</td><td class="n">1,80</td></tr>
+          <tr><td class="c">1.1</td><td>Грунт для утилизации (ρ = 1,4 т/м³)</td><td class="n">1,80×1,4</td><td class="c">м³/т</td><td class="n">1,80/2,52</td></tr>
+          <tr><td class="c">2</td><td>Отсыпка и засыпка песком слоем 200 мм с трамбовкой</td><td class="n">0,25×0,20×12,00</td><td class="c">м³</td><td class="n">0,60</td></tr>
+          <tr><td class="c">3</td><td>Засыпка щебнем слоем 250 мм с трамбовкой</td><td class="n">0,25×0,25×12,00</td><td class="c">м³</td><td class="n">0,75</td></tr>
+          <tr><td class="c">4</td><td>Восстановление покрытия холодным асфальтом, слой 150 мм</td><td class="n">0,25×12,00</td><td class="c">м²</td><td class="n">3,00</td></tr>
+          <tr><td class="c">4.1</td><td>То же, объём асфальтобетонной смеси</td><td class="n">3,00×0,15</td><td class="c">м³</td><td class="n">0,45</td></tr>
+          <tr><td class="c">5</td><td>Прокладка трубы гофрированной ПНД d32 в траншее (основная и резервная)</td><td class="n">по поз. 16 ВОР</td><td class="c">м</td><td class="n">12,00</td></tr>
+          <tr class="total"><td class="c">—</td><td>Итого объём выемки траншеи</td><td class="n">B×H×L</td><td class="c">м³</td><td class="n">1,80</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ======================= СОПОСТАВЛЕНИЕ ======================= -->
+  <section class="plate">
+    <div class="plate-head">
+      <span class="plate-num">Л5</span>
+      <span class="plate-title">Сопоставление с ВОР № 1 от 10.07.2025</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:58px">Поз. ВОР</th>
+            <th>Показатель</th>
+            <th style="width:52px">Ед.</th>
+            <th class="n" style="width:80px">По ВОР</th>
+            <th class="n" style="width:80px">Факт</th>
+            <th class="n" style="width:82px">Отклонение</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="c">5</td><td>Сечение траншеи (ширина × глубина)</td><td class="c">м</td><td class="n">0,60×1,00</td><td class="n">0,25×0,60</td><td class="n delta-neg">−</td></tr>
+          <tr><td class="c">5</td><td>Длина траншеи</td><td class="c">м</td><td class="n">12,00</td><td class="n">12,00</td><td class="n">0,00</td></tr>
+          <tr><td class="c">5</td><td>Разработка грунта</td><td class="c">м³</td><td class="n">7,20</td><td class="n">1,80</td><td class="n delta-neg">−5,40</td></tr>
+          <tr><td class="c">5.1</td><td>Грунт для утилизации</td><td class="c">м³/т</td><td class="n">7,20/10,08</td><td class="n">1,80/2,52</td><td class="n delta-neg">−5,40/−7,56</td></tr>
+          <tr><td class="c">6, 7</td><td>Песок (по ВОР 100 + 200 мм; факт единый слой 200 мм)</td><td class="c">м³</td><td class="n">2,16</td><td class="n">0,60</td><td class="n delta-neg">−1,56</td></tr>
+          <tr><td class="c">8</td><td>Щебень (по ВОР 630 мм; факт 250 мм)</td><td class="c">м³</td><td class="n">4,54</td><td class="n">0,75</td><td class="n delta-neg">−3,79</td></tr>
+          <tr><td class="c">9</td><td>Восстановление покрытия холодным асфальтом</td><td class="c">м²</td><td class="n">7,20</td><td class="n">3,00</td><td class="n delta-neg">−4,20</td></tr>
+          <tr><td class="c">16</td><td>Труба гофрированная ПНД d32</td><td class="c">м</td><td class="n">12,00</td><td class="n">12,00</td><td class="n">0,00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="flag"><b>К сведению.</b> Фактическое сечение траншеи меньше предусмотренного ВОР (0,25×0,60 против 0,60×1,00). Объёмы земляных работ, песка, щебня и восстановления покрытия подлежат корректировке в акте КС-2 и в локальном сметном расчёте 02-01-01 по фактическим значениям настоящей схемы.</p>
+  </section>
+
+  <!-- ======================= ПРИМЕЧАНИЯ ======================= -->
+  <section class="plate">
+    <div class="plate-head">
+      <span class="plate-num">Л6</span>
+      <span class="plate-title">Примечания</span>
+    </div>
+    <ol class="notes">
+      <li>Все размеры на схеме указаны в миллиметрах, объёмы — в кубических метрах.</li>
+      <li>За условную отметку <b>0,000</b> принят верх существующего асфальтобетонного покрытия проезда в створе разреза 1—1.</li>
+      <li>Сумма толщин конструктивных слоёв <b>200 + 250 + 150 = 600 мм</b> соответствует фактической глубине траншеи.</li>
+      <li>Обратная засыпка выполнена послойно с уплотнением: песок — слоями до 200 мм, щебень — слоями до 250 мм, трамбовка механическая.</li>
+      <li>Трубы ПНД d32 уложены в песчаный слой с защитной засыпкой песком выше верха трубы; острые включения в засыпке отсутствуют.</li>
+      <li>Стенки траншеи вертикальные, без креплений; глубина 0,6 м не превышает предельной для разработки без креплений в грунтах группы 2.</li>
+      <li>Восстановление покрытия выполнено холодным асфальтом заподлицо с существующим покрытием по кромке штробы.</li>
+      <li>Схема составлена по результатам исполнительной съёмки в присутствии представителя технического надзора Заказчика.</li>
+    </ol>
+  </section>
+
+  <!-- ======================= ПОДПИСИ ======================= -->
+  <section class="plate">
+    <div class="plate-head">
+      <span class="plate-num">Л7</span>
+      <span class="plate-title">Схему составили и приняли</span>
+    </div>
+    <div class="sign">
+      <div>
+        <span class="who">Производитель работ (Подрядчик)</span>
+        <div class="line"></div>
+        <div class="cap"><span>должность, подпись</span><span>Ф. И. О.</span></div>
+      </div>
+      <div>
+        <span class="who">Технический надзор (Заказчик)</span>
+        <div class="line"></div>
+        <div class="cap"><span>должность, подпись</span><span>Ф. И. О.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= ОСНОВНАЯ НАДПИСЬ ======================= -->
+  <div class="titleblock">
+    <div class="left">
+      <span class="tb-k">Объект</span>
+      <div class="tb-v">Здание ГБУЗ ЛОКБ, Полюстровский пр., д. 12, Санкт-Петербург.<br>Текущий ремонт шлагбаума.</div>
+      <div class="tb-grid">
+        <div><span class="tb-k">Заказчик</span><span class="tb-v">ГБУЗ ЛОКБ</span></div>
+        <div><span class="tb-k">Подрядчик</span><span class="tb-v blank"></span></div>
+        <div><span class="tb-k">Основание</span><span class="tb-v">ВОР № 1 от 10.07.2025</span></div>
+      </div>
+    </div>
+    <div>
+      <span class="tb-k">Наименование схемы</span>
+      <div class="tb-v">Исполнительная схема траншеи под кабельную линию: план трассы, разрез 1—1, ведомость объёмов</div>
+      <div class="tb-grid">
+        <div><span class="tb-k">Стадия</span><span class="tb-v">ИД</span></div>
+        <div><span class="tb-k">Шифр</span><span class="tb-v">02-01-01</span></div>
+        <div><span class="tb-k">Дата</span><span class="tb-v blank"></span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
