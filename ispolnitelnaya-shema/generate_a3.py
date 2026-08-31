@@ -103,10 +103,15 @@ DEFS = f'''<defs>
     <circle cx="2.0" cy="0.4" r="0.13" fill="{INK}"/>
     <path d="M0.3 2.2 L0.8 1.7 L1.0 2.3 Z" fill="none" stroke="{INK}" stroke-width="0.13"/>
   </pattern>
-  <pattern id="bet" width="2.4" height="2.4" patternUnits="userSpaceOnUse">
-    <rect width="2.4" height="2.4" fill="#ffffff"/>
-    <path d="M0,2.4 L2.4,0" stroke="{INK}" stroke-width="0.15"/>
-    <circle cx="1.5" cy="1.6" r="0.15" fill="{INK}"/>
+  <pattern id="gr" width="2.2" height="2.2" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+    <rect width="2.2" height="2.2" fill="#ffffff"/>
+    <line x1="0" y1="0" x2="0" y2="2.2" stroke="#000000" stroke-width="0.15"/>
+  </pattern>
+  <pattern id="bet" width="4.0" height="4.0" patternUnits="userSpaceOnUse">
+    <rect width="4.0" height="4.0" fill="#ffffff"/>
+    <path d="M0,4 L4,0 M-1,1 L1,-1 M3,5 L5,3" stroke="{INK}" stroke-width="0.15"/>
+    <circle cx="2.6" cy="1.2" r="0.3" fill="none" stroke="{INK}" stroke-width="0.15"/>
+    <path d="M0.7 3.1 L1.5 2.5 L1.8 3.4 Z" fill="none" stroke="{INK}" stroke-width="0.15"/>
   </pattern>
 </defs>'''
 
@@ -175,9 +180,14 @@ def stamp():
 
 # ---------------------------------------------------------------- главный вид
 VX1, VX2 = 55.0, 295.0            # 12 000 мм, М гор. 1:50
-Y0 = 100.0                        # верх асфальта
-Y_A, Y_S, Y_B = 107.5, 120.0, 130.0   # низ асфальта / щебня / песка, М верт. 1:20
-Y_PIPE = 125.0                    # ось труб — 0,50 м от уровня асфальта
+Y0 = 90.0                         # верх асфальта
+Y_A, Y_S, Y_B = 97.5, 110.0, 120.0    # низ асфальта / щебня / песка, М верт. 1:20
+Y_PIPE = 115.0                    # ось стального футляра — 0,50 м от уровня асфальта
+
+# фундамент шлагбаума (М гор. 1:50, верт. 1:20)
+PIT_L, PIT_R, PIT_B = 45.0, 65.0, 140.0        # котлован 1,00 x 1,00 м
+BET_L, BET_R, BET_B = 48.7, 61.3, 131.7        # бетон В25, V = 0,329 м3
+PEN_B, SHB_B = 132.5, PIT_B                    # пеноплекс 40 мм, щебень 150 мм
 
 
 def main_view():
@@ -192,54 +202,68 @@ def main_view():
     o.append(ln(VX1, Y_A, VX2, Y_A, 0.3))
     o.append(ln(VX1, Y_S, VX2, Y_S, 0.3))
 
-    # стальной футляр d72 по трассе (наружный контур + ось)
-    o.append(ln(VX1 + 2, Y_PIPE - 1.8, VX2 - 2, Y_PIPE - 1.8, 0.4))
-    o.append(ln(VX1 + 2, Y_PIPE + 1.8, VX2 - 2, Y_PIPE + 1.8, 0.4))
-    o.append(ln(VX1 + 2, Y_PIPE, VX2 - 2, Y_PIPE, 0.18, dash="7 1.6 1 1.6"))
+    # стальной футляр 76x3,5 по трассе
+    o.append(ln(PIT_R + 1, Y_PIPE - 1.9, VX2 - 2, Y_PIPE - 1.9, 0.4))
+    o.append(ln(PIT_R + 1, Y_PIPE + 1.9, VX2 - 2, Y_PIPE + 1.9, 0.4))
+    o.append(ln(PIT_R + 1, Y_PIPE, VX2 - 2, Y_PIPE, 0.18, dash="7 1.6 1 1.6"))
 
-    # шлагбаум слева: стойка и стрела
-    o.append(rect(VX1 - 1.4, 82, 2.8, Y0 - 82, fill="#ffffff", sw=0.5))
-    o.append(ln(VX1 + 1.4, 85.5, 165, 85.5, 0.5))
-    o.append(ln(VX1 + 1.4, 88.0, 165, 88.0, 0.5))
-    o.append(ln(165, 85.5, 165, 88.0, 0.5))
-    o.append(txt(VX1, 78, "Шлагбаум", 3.0))
+    # фундамент шлагбаума: котлован, обратная засыпка, щебень, пеноплекс, бетон
+    o.append(rect(PIT_L, Y0, PIT_R - PIT_L, PIT_B - Y0, fill="#ffffff", sw=0))
+    for x1, x2 in ((PIT_L, BET_L), (BET_R, PIT_R)):
+        o.append(f'<rect x="{x1}" y="{Y0}" width="{x2 - x1:.2f}" height="{BET_B - Y0:.2f}" fill="url(#gr)"/>')
+    o.append(f'<rect x="{PIT_L}" y="{PEN_B}" width="{PIT_R - PIT_L}" height="{SHB_B - PEN_B:.2f}" fill="url(#shb)"/>')
+    o.append(rect(BET_L, BET_B, BET_R - BET_L, PEN_B - BET_B, fill="#ffffff", sw=0.35))
+    o.append(f'<rect x="{BET_L}" y="{Y0}" width="{BET_R - BET_L:.2f}" height="{BET_B - Y0:.2f}" fill="url(#bet)"/>')
+    o.append(rect(BET_L, Y0, BET_R - BET_L, BET_B - Y0, sw=0.5))
+    o.append(f'<path d="M{PIT_L},{Y0} L{PIT_L},{PIT_B} L{PIT_R},{PIT_B} L{PIT_R},{Y0}" fill="none" '
+             f'stroke="{INK}" stroke-width="0.5"/>')
 
-    # фундамент Ф2 и стойка фотоэлемента справа
+    # шлагбаум: стойка и стрела
+    o.append(rect(53.6, 68, 2.8, Y0 - 68, fill="#ffffff", sw=0.5))
+    o.append(ln(56.4, 71.5, 165, 71.5, 0.5))
+    o.append(ln(56.4, 74.0, 165, 74.0, 0.5))
+    o.append(ln(165, 71.5, 165, 74.0, 0.5))
+    o.append(txt(55, 64, "Шлагбаум", 3.0))
+
+    # фундамент Ф2 и стойка фотоэлемента
     fx = VX2
     o.append(f'<path d="M{fx - 6},{Y0} L{fx - 4},{Y0 - 6} L{fx + 4},{Y0 - 6} L{fx + 6},{Y0} Z" '
              f'fill="url(#bet)" stroke="{INK}" stroke-width="0.5"/>')
     o.append(rect(fx - 0.9, Y0 - 22, 1.8, 16, fill="#ffffff", sw=0.5))
-    o.append(leader([(fx + 4, Y0 - 5), (fx + 22, 78)], "Фундамент Ф2, стойка фотоэлемента", 3.0))
+    o.append(leader([(fx + 4, Y0 - 5), (317, 68)], "Фундамент Ф2, стойка фотоэлемента", 3.0))
 
-    # размер длины
-    o.append(dim_h(VX1, VX2, 62, "12 м", ext_y=Y0 - 2, size=4.0, over=1.6))
+    o.append(dim_h(VX1, VX2, 52, "12 м", ext_y=Y0 - 2, size=4.0, over=1.6))
 
-    # глубина заложения труб
-    o.append(rect(219.0, 108.0, 12.0, 5.0, fill="#FFFFFF", sw=0))
+    o.append(rect(219.0, 98.0, 12.0, 5.0, fill="#FFFFFF", sw=0))
     o.append(dim_v(Y0, Y_PIPE, 232, "0,50м", ext_x=None, size=3.0, side=-1))
-    o.append(leader([(250, Y_PIPE + 1.8), (285, 70)], "Стальной футляр d72 с трубами ПНД d32, 2 шт.", 3.0))
+    o.append(leader([(250, Y_PIPE + 1.9), (285, 60)],
+                    "Стальной футляр 76×3,5 с трубами ПНД d32, 2 шт.", 3.0))
 
-    # состав конструкции справа
+    o.append(dim_v(Y0, PIT_B, 40, "1,00м", ext_x=PIT_L, size=3.0, side=-1))
+    o.append(leader([(55, 112), (80, 145)],
+                    "Фундамент шлагбаума 0,63×0,63×0,83* м, бетон В25 П3, V = 0,329 м³", 2.9))
+    o.append(leader([(62, 136), (80, 152)],
+                    "Щебёночная подготовка 150 мм, пеноплекс 40 мм (поз. 11, 15 ВОР)", 2.9))
+
     for y in (Y0, Y_A, Y_S, Y_B):
         o.append(ln(VX2 + 8, y, 405, y, 0.15))
-    for (ya, yb, s) in ((Y0, Y_A, "0,15 м — Асфальт"),
-                        (Y_A, Y_S, "0,25 м — Щебень"),
-                        (Y_S, Y_B, "0,20 м — Песок")):
+    for (ya, yb, sname) in ((Y0, Y_A, "0,15 м — Асфальт"),
+                            (Y_A, Y_S, "0,25 м — Щебень"),
+                            (Y_S, Y_B, "0,20 м — Песок")):
         o.append(ln(340, ya, 340, yb, 0.2))
         o += [arrow(340, ya, 0, -1), arrow(340, yb, 0, 1)]
-        o.append(txt(344, (ya + yb) / 2 + 1.1, s, 3.0, anchor="start"))
+        o.append(txt(344, (ya + yb) / 2 + 1.1, sname, 3.0, anchor="start"))
 
-    # линия разреза А—А
     xc = 180.0
-    for yy, uy in ((92.0, -1), (138.0, 1)):
-        o.append(ln(xc, yy, xc, yy + (-6 if uy < 0 else 6), 0.8))
-        o.append(ln(xc, yy + (-6 if uy < 0 else 6), xc + 5, yy + (-6 if uy < 0 else 6), 0.8))
-        o.append(arrow(xc + 5, yy + (-6 if uy < 0 else 6), 1, 0, L=3.0, half=1.0))
+    for yy, uy in ((82.0, -1), (128.0, 1)):
+        dy = -6 if uy < 0 else 6
+        o.append(ln(xc, yy, xc, yy + dy, 0.8))
+        o.append(ln(xc, yy + dy, xc + 5, yy + dy, 0.8))
+        o.append(arrow(xc + 5, yy + dy, 1, 0, L=3.0, half=1.0))
         o.append(txt(xc - 2.6, yy + (-6.5 if uy < 0 else 8.5), "А", 5.0, anchor="end"))
     return "".join(o)
 
 
-# ---------------------------------------------------------------- разрез А—А
 def section_aa():
     cx, sy = 120.0, 182.0                    # ось траншеи, верх асфальта, М 1:10
     tl, tr = cx - 12.5, cx + 12.5            # 0,25 м
@@ -262,8 +286,8 @@ def section_aa():
     o.append(ln(tl, ys, tr, ys, 0.3))
 
     # стальной футляр d72 с двумя трубами ПНД d32
-    o.append(f'<circle cx="{cx}" cy="{yp}" r="3.6" fill="#ffffff" stroke="{INK}" stroke-width="0.4"/>')
-    o.append(f'<circle cx="{cx}" cy="{yp}" r="3.25" fill="none" stroke="{INK}" stroke-width="0.2"/>')
+    o.append(f'<circle cx="{cx}" cy="{yp}" r="3.8" fill="#ffffff" stroke="{INK}" stroke-width="0.4"/>')
+    o.append(f'<circle cx="{cx}" cy="{yp}" r="3.45" fill="none" stroke="{INK}" stroke-width="0.2"/>')
     for dx in (-1.6, 1.6):
         o.append(f'<circle cx="{cx + dx}" cy="{yp}" r="1.6" fill="none" stroke="{INK}" stroke-width="0.25"/>')
 
@@ -287,21 +311,21 @@ def detail_node():
     o = [txt(cx, 186, "Узел 1", 5.2, weight="700"),
          txt(cx, 192, "М 1:2", 3.4),
          ln(cx - 12, 193.6, cx + 12, 193.6, 0.4)]
-    o.append(f'<circle cx="{cx}" cy="{cy}" r="18" fill="#ffffff" stroke="{INK}" stroke-width="0.6"/>')
-    o.append(f'<circle cx="{cx}" cy="{cy}" r="16.25" fill="none" stroke="{INK}" stroke-width="0.35"/>')
+    o.append(f'<circle cx="{cx}" cy="{cy}" r="19" fill="#ffffff" stroke="{INK}" stroke-width="0.6"/>')
+    o.append(f'<circle cx="{cx}" cy="{cy}" r="17.25" fill="none" stroke="{INK}" stroke-width="0.35"/>')
     for dx in (-8.0, 8.0):
         o.append(f'<circle cx="{cx + dx}" cy="{cy}" r="8" fill="none" stroke="{INK}" stroke-width="0.4"/>')
         o.append(f'<circle cx="{cx + dx}" cy="{cy}" r="6.6" fill="none" stroke="{INK}" stroke-width="0.2"/>')
-    o.append(ln(cx - 22, cy, cx + 22, cy, 0.15, dash="6 1.5 1 1.5"))
-    o.append(ln(cx, cy - 22, cx, cy + 22, 0.15, dash="6 1.5 1 1.5"))
-    o.append(leader([(cx + 12.7, cy - 12.7), (58, 240)], "Труба стальная d72 — футляр", 2.8))
-    o.append(leader([(cx + 8, cy + 6.6), (58, 249)], "Труба гофрированная ПНД d32, 2 шт.", 2.8))
+    o.append(ln(cx - 23, cy, cx + 23, cy, 0.15, dash="6 1.5 1 1.5"))
+    o.append(ln(cx, cy - 23, cx, cy + 23, 0.15, dash="6 1.5 1 1.5"))
+    o.append(leader([(cx + 13.4, cy + 13.4), (66, 240)], "Труба стальная 76×3,5 — футляр", 2.8))
+    o.append(leader([(cx + 8, cy + 6.6), (60, 249)], "Труба гофрированная ПНД d32, 2 шт.", 2.8))
     return "".join(o)
 
 
 # ---------------------------------------------------------------- ведомость
 def table():
-    TX, TY = 192.0, 158.0
+    TX, TY = 192.0, 150.0
     cols = [(8, "№"), (68, "Наименование"), (12, "Ед."), (24, "По ВОР"),
             (22, "Факт"), (26, "Отклонение"), (58, "Расчёт факта")]
     rows = [
@@ -312,9 +336,14 @@ def table():
         ("4", "Восстановление покрытия холодным асфальтом", "м²", "7,20", "3,00", "−4,20", "0,25×12,00"),
         ("4.1", "То же, объём асфальтобетонной смеси", "м³", "—", "0,45", "—", "3,00×0,15"),
         ("5", "Труба гофрированная ПНД d32, 2 шт. (в футляре)", "м", "12,00", "12,00", "0,00", "по поз. 16 ВОР"),
-        ("6", "Труба стальная d72 — футляр (по ВОР 76×3,5)", "м", "15,00", "—", "—", "уточнить по съёмке"),
+        ("6", "Труба стальная 76×3,5 — футляр", "м", "15,00", "12,00", "−3,00", "по длине траншеи"),
+        ("7", "Выемка грунта под фундамент шлагбаума", "м³", "1,00", "1,00", "0,00", "по поз. 10 ВОР"),
+        ("8", "Засыпка щебнем под фундамент, слой 150 мм", "м³", "0,15", "0,15", "0,00", "по поз. 11 ВОР"),
+        ("9", "Засыпка грунтом вокруг фундамента", "м³", "0,60", "0,60", "0,00", "по поз. 12 ВОР"),
+        ("10", "Бетонирование фундамента, бетон В25 П3", "м³", "0,329", "0,329", "0,00", "по поз. 13 ВОР"),
+        ("11", "Пеноплэкс Комфорт 40×585×1185 под фундамент", "шт", "1,00", "1,00", "0,00", "по поз. 15 ВОР"),
     ]
-    rh, hh = 5.8, 6.6
+    rh, hh = 5.3, 6.2
     tot = sum(c[0] for c in cols)
     o = [txt(TX, TY - 2.6, "Ведомость фактически выполненных объёмов", 3.8,
              anchor="start", weight="700")]
@@ -324,7 +353,7 @@ def table():
     for wd, hname in cols:
         if cx > TX:
             o.append(ln(cx, TY, cx, TY + hh + rh * len(rows), 0.2))
-        o.append(txt(cx + wd / 2, TY + 4.6, hname, 2.5, weight="700"))
+        o.append(txt(cx + wd / 2, TY + 4.4, hname, 2.4, weight="700"))
         cx += wd
     for i, r in enumerate(rows):
         yy = TY + hh + rh * i
@@ -333,33 +362,35 @@ def table():
         cx = TX
         for j, wd in enumerate([c[0] for c in cols]):
             if j == 1:
-                o.append(txt(cx + 1.4, yy + 4.0, r[j], 2.5, anchor="start"))
+                o.append(txt(cx + 1.4, yy + 3.7, r[j], 2.4, anchor="start"))
             else:
-                o.append(txt(cx + wd / 2, yy + 4.0, r[j], 2.5, fill=RED if j == 3 else INK))
+                o.append(txt(cx + wd / 2, yy + 3.7, r[j], 2.4, fill=RED if j == 3 else INK))
             cx += wd
-    o.append(txt(TX, TY + hh + rh * len(rows) + 4.6,
-                 "Итого объём выемки траншеи 1,80 м³. Графа «По ВОР» — проектные значения, показаны красным.",
-                 2.7, anchor="start"))
+    o.append(txt(TX, TY + hh + rh * len(rows) + 4.4,
+                 "Графа «По ВОР» — проектные значения по Ведомости объёмов работ №1 от 10.07.2025, показаны красным.",
+                 2.6, anchor="start"))
     return "".join(o)
 
 
 NOTES = [
     "1. Размеры на схеме указаны в метрах. Толщины слоёв и глубины даны от верха асфальтобетонного покрытия проезда.",
     "2. Фактические параметры траншеи: ширина 0,25 м, глубина 0,60 м, длина 12,00 м; конструкция 0,20 песка + 0,25 щебня + 0,15 асфальта = 0,60 м.",
-    "3. В траншее уложен стальной футляр d72, в котором проложены две гофрированные трубы ПНД d32 (см. узел 1).",
+    "3. В траншее на всю длину 12,00 м уложена стальная труба-футляр 76×3,5, в которой проложены две гофрированные трубы ПНД d32 (см. узел 1).",
     "4. Ось футляра — на отметке 0,50 м от верха покрытия, в песчаном слое; при иных данных исполнительной съёмки значение уточнить.",
-    "5. Фактическую длину стального футляра уточнить по исполнительной съёмке (по ВОР поз. 20 предусмотрено 15,00 м трубы 76×3,5).",
-    "6. По ВОР №1 от 10.07.2025 предусматривалась траншея 0,60×1,00 м. Фактически выполненные объёмы приведены в ведомости",
-    "    и подлежат учёту в акте КС-2 и локальном сметном расчёте 02-01-01.",
-    "7. Обратная засыпка выполнена послойно с уплотнением. Стенки траншеи вертикальные, без крепления.",
-    "8. Основание: ВОР №1 от 10.07.2025, ЛСР 02-01-01. Работы выполнены по СП 45.13330.2017 и СП 78.13330.2012.",
+    "5. Под шлагбаумом взамен демонтированного выполнен монолитный фундамент из бетона В25 П3 объёмом 0,329 м³ на щебёночной подготовке",
+    "    150 мм с прослойкой из пеноплекса 40 мм, в котловане 1,00×1,00×1,00 м с обратной засыпкой грунтом (поз. 10—13, 15 ВОР).",
+    "6. * Габариты фундамента в плане и по высоте приняты расчётом по объёму бетона и котлована; фактические размеры уточнить по съёмке.",
+    "7. По ВОР №1 от 10.07.2025 предусматривались траншея 0,60×1,00 м и 15,00 м трубы 76×3,5; фактические объёмы приведены в ведомости",
+    "    и подлежат учёту в акте КС-2 и локальном сметном расчёте 02-01-01.",
+    "8. Обратная засыпка выполнена послойно с уплотнением. Стенки траншеи вертикальные, без крепления.",
+    "9. Основание: ВОР №1 от 10.07.2025, ЛСР 02-01-01. Работы выполнены по СП 45.13330.2017 и СП 78.13330.2012.",
 ]
 
 
 def notes():
-    o = [txt(22.5, 255.0, "Примечания:", 3.1, anchor="start", weight="700")]
+    o = [txt(22.5, 254.0, "Примечания:", 3.0, anchor="start", weight="700")]
     for i, s in enumerate(NOTES):
-        o.append(txt(22.5, 259.5 + 3.55 * i, s, 2.6, anchor="start"))
+        o.append(txt(22.5, 258.2 + 3.3 * i, s, 2.5, anchor="start"))
     return "".join(o)
 
 
