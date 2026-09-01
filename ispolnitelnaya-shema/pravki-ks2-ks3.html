@@ -1,0 +1,315 @@
+<title>Правки по КС-2 и КС-3 шлагбаума</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Sans+Narrow:wght@400;700&family=PT+Mono&display=swap">
+
+<style>
+:root{
+  --paper:#FBFAF6; --sheet:#FFFFFF; --ink:#15181B; --ink-2:#535C63; --ink-3:#7C868D;
+  --rule:#C6C4BA; --rule-hair:#E1DFD6; --rule-strong:#22282D;
+  --accent:#1B4E75; --accent-soft:#E6EEF5;
+  --warn:#8A4B12; --warn-bg:#F7EDE0; --warn-line:#C07A33;
+  --stop:#8E2222; --stop-bg:#F7E7E7;
+  --ok:#2C6141; --ok-bg:#E6F0E9;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1317; --sheet:#151B21; --ink:#E7EBEE; --ink-2:#9EAAB3; --ink-3:#76828B;
+    --rule:#2E3941; --rule-hair:#222B32; --rule-strong:#C4CED5;
+    --accent:#79B0DE; --accent-soft:#17242F;
+    --warn:#E0A96A; --warn-bg:#211A11; --warn-line:#8A6432;
+    --stop:#E58B8B; --stop-bg:#241414;
+    --ok:#7FC49B; --ok-bg:#132018;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1317; --sheet:#151B21; --ink:#E7EBEE; --ink-2:#9EAAB3; --ink-3:#76828B;
+  --rule:#2E3941; --rule-hair:#222B32; --rule-strong:#C4CED5;
+  --accent:#79B0DE; --accent-soft:#17242F;
+  --warn:#E0A96A; --warn-bg:#211A11; --warn-line:#8A6432;
+  --stop:#E58B8B; --stop-bg:#241414;
+  --ok:#7FC49B; --ok-bg:#132018;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"PT Sans","Segoe UI",Arial,sans-serif;font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased}
+.sheet{max-width:196mm;margin:0 auto;padding:10mm 9mm 12mm;background:var(--sheet);
+  border:1px solid var(--rule);display:flex;flex-direction:column;gap:8mm}
+
+.stamp-row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline;
+  font-family:"PT Sans Narrow","PT Sans",Arial,sans-serif;text-transform:uppercase;
+  letter-spacing:.13em;font-size:11px;color:var(--ink-3);
+  border-bottom:2px solid var(--rule-strong);padding-bottom:6px}
+h1{font-family:"PT Sans Narrow","PT Sans",Arial,sans-serif;font-size:29px;line-height:1.1;
+  font-weight:700;margin:4px 0 0;text-wrap:balance}
+.lead{font-size:15px;color:var(--ink-2);margin:0;max-width:64ch}
+
+.plate{display:flex;flex-direction:column;gap:8px}
+.plate-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:5px}
+.plate-num{font-family:"PT Mono",monospace;font-size:12px;color:var(--sheet);
+  background:var(--rule-strong);padding:2px 7px;letter-spacing:.06em}
+.plate-title{font-family:"PT Sans Narrow","PT Sans",Arial,sans-serif;font-weight:700;font-size:17px;
+  text-transform:uppercase;letter-spacing:.06em}
+.plate-note{margin-left:auto;font-size:12px;color:var(--ink-3);font-style:italic}
+
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{border:1px solid var(--rule);padding:5px 7px;vertical-align:top;text-align:left}
+thead th{background:var(--accent-soft);font-family:"PT Sans Narrow","PT Sans",Arial,sans-serif;
+  font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;line-height:1.25}
+td.n,th.n{text-align:right;font-family:"PT Mono",monospace;font-size:12px;white-space:nowrap}
+td.c{text-align:center;font-family:"PT Mono",monospace;font-size:12px;white-space:nowrap}
+tbody tr.total td{font-weight:700;background:var(--accent-soft)}
+.tbl-wrap{overflow-x:auto}
+.was{color:var(--stop)}
+.now{color:var(--ok);font-weight:700}
+q{font-style:italic;color:var(--stop)}
+q::before,q::after{content:'«'}
+q::after{content:'»'}
+code{font-family:"PT Mono",monospace;font-size:12px;background:var(--accent-soft);padding:0 3px}
+
+.flag{background:var(--warn-bg);border-left:3px solid var(--warn-line);padding:10px 12px;font-size:14px}
+.flag b{color:var(--warn)}
+.flag.stop{background:var(--stop-bg);border-left-color:var(--stop)}
+.flag.stop b{color:var(--stop)}
+
+ol.q{counter-reset:n;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}
+ol.q li{counter-increment:n;position:relative;padding-left:28px;font-size:14px}
+ol.q li::before{content:counter(n);position:absolute;left:0;top:1px;width:19px;height:19px;
+  border:1px solid var(--rule-strong);border-radius:50%;display:grid;place-items:center;
+  font-family:"PT Mono",monospace;font-size:11px}
+ol.q b{display:block;margin-bottom:1px}
+
+.foot{border-top:1px solid var(--rule);padding-top:7px;font-size:12px;color:var(--ink-3);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:760px){ h1{font-size:24px} .sheet{padding:6mm} }
+@media print{
+  @page{size:A4 portrait;margin:11mm}
+  body{background:#fff}
+  .sheet{border:none;max-width:none;padding:0;gap:6mm}
+  .plate,table,.flag{break-inside:avoid}
+  tr{break-inside:avoid}
+  h1{font-size:23px}
+}
+</style>
+
+<div class="sheet">
+
+  <header style="display:flex;flex-direction:column;gap:9px">
+    <div class="stamp-row">
+      <span>ГБУЗ ЛОКБ · Полюстровский пр., д. 12</span>
+      <span>Контракт № СБ.0345200004026000317 от 09.04.2026</span>
+    </div>
+    <h1>Правки по КС-2 и КС-3: текущий ремонт шлагбаума</h1>
+    <p class="lead">Разбор 12 замечаний заказчика, отмеченных красным в акте № КС-2 (ОКУД 0322005, 19 л.) и справке № КС-3 (ОКУД 0322001). Для каждого замечания — что стоит сейчас и что поставить.</p>
+  </header>
+
+  <!-- ============ ГЛАВНОЕ ============ -->
+  <div class="flag stop">
+    <b>Главное, что не видно из красных пометок.</b> КС-2 закрыт по <b>проектным</b> объёмам ВОР, а исполнительная схема даёт другие фактические. Пример: грунт на утилизацию в акте 10,64 т, по схеме — 3,08 т; стальная труба в акте 15,00 м, по схеме — 12,00 м; асфальт в акте 9,00 м², по схеме — 3,00 м². Пока эти два документа не сведены к одним цифрам, замечание «нельзя закрывать больше, чем в контрактной смете» будет возвращаться. Сверка — в разделе 4.
+  </div>
+
+  <!-- ============ КС-3 ============ -->
+  <section class="plate">
+    <div class="plate-head">
+      <span class="plate-num">1</span>
+      <span class="plate-title">КС-3 — справка о стоимости</span>
+      <span class="plate-note">6 замечаний</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:24%">Поле</th><th style="width:34%">Сейчас</th><th>Поставить</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Объект<br><span style="color:var(--ink-3);font-size:12px">пометка <q>название поправьте</q></span></td>
+            <td class="was">Выполнение работ по демонтажу хоккейного корта</td>
+            <td class="now">Выполнение работ по текущему ремонту шлагбаума ГБУЗ ЛОКБ, расположенного по адресу: г. Санкт-Петербург, пр. Полюстровский, д. 12</td>
+          </tr>
+          <tr>
+            <td>Заказчик, Подрядчик</td>
+            <td class="was">Заказчик<b>(Генподрядчик)</b>, Подрядчик<b>(Субподрядчик)</b> — выделено маркером</td>
+            <td class="now">Оставить «Заказчик» и «Подрядчик»: по контракту генподряда и субподряда нет</td>
+          </tr>
+          <tr>
+            <td>Дата составления,<br>отчётный период<br><span style="color:var(--ink-3);font-size:12px">пометка <q>даты укажите</q></span></td>
+            <td class="was">не заполнено</td>
+            <td class="now">Дата составления и период «с … по …» — по датам актов КС-2</td>
+          </tr>
+          <tr>
+            <td>Строка 1 таблицы<br><span style="color:var(--ink-3);font-size:12px">пометка <q>указываете, как по КС-2 с учётом понижающего К и НДС</q></span></td>
+            <td class="was">Одна строка «Текущий ремонт шлагбаума ГБУЗ ЛОКБ (по фактически выполненным работам)» — 87 369,91</td>
+            <td class="now">Две строки:<br>1. Акт № 1 от ____ (СМР) — <b>76 446,94</b><br>2. Акт № 1 от ____ (мусор) — <b>10 005,31</b><br>Итого <b>86 452,25</b></td>
+          </tr>
+          <tr>
+            <td>Должность Заказчика<br><span style="color:var(--ink-3);font-size:12px">пометка <q>укажите должность Заказчика, как в контракте</q></span></td>
+            <td class="was">Директор</td>
+            <td class="now">Должность подписанта строго по преамбуле контракта</td>
+          </tr>
+          <tr>
+            <td>Строка НДС</td>
+            <td class="was">НДС не облагается (УСН, ст. 346.11 НК РФ) — 0</td>
+            <td class="now">Противоречит КС-2, где начислен НДС 22 % (15 755,23). Решить: либо УСН без НДС и снять начисление в КС-2, либо оставить НДС 22 % и убрать эту строку. См. раздел 5, вопрос 1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin:0;font-size:12.5px;color:var(--ink-3)">Сумма по пометкам заказчика: 76 446,94 + 10 005,31 = 86 452,25. На полях написано 86 452,26 — расхождение в одну копейку от округления, брать 86 452,25.</p>
+  </section>
+
+  <!-- ============ КС-2 ============ -->
+  <section class="plate">
+    <div class="plate-head">
+      <span class="plate-num">2</span>
+      <span class="plate-title">КС-2 — акт о приёмке работ</span>
+      <span class="plate-note">6 замечаний на листах 4—7, 15, 19</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="c" style="width:7%">Лист</th>
+            <th class="c" style="width:7%">Поз.</th>
+            <th style="width:30%">Замечание и что не так</th>
+            <th>Что сделать</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="c">4</td><td class="c">5</td>
+            <td><q>формулу поправьте</q><br>Записано <code>V=(12×0,6×1)/1000</code> = 0,0072, а в графе 8 стоит 0,00108 (1,08 м³). Формула и количество не сходятся</td>
+            <td>Разработка грунта. По исполнительной схеме траншея 0,25 × 0,60 × 12,00 = <b>1,80 м³</b>:<br><code>V=(12×0,25×0,6)/1000 = 0,0018</code></td>
+          </tr>
+          <tr>
+            <td class="c">4</td><td class="c">6</td>
+            <td><q>формулу поправьте</q>, на полях <q>0,36/100</q><br>Записано <code>V=0,72/100</code>, в графе 0,0036 (0,36 м³)</td>
+            <td>Песок. По схеме 0,25 × 0,20 × 12,00 = <b>0,60 м³</b>:<br><code>V=0,60/100 = 0,006</code>.<br>Позиция 7 (засыпка песком) закрыта нулём — весь песок одной позицией</td>
+          </tr>
+          <tr>
+            <td class="c">5</td><td class="c">8, 8.1</td>
+            <td><q>формулу поправьте</q>, у ресурса обведено <q>1000</q><br>Записано <code>V=4,54/1000</code>, в графе 0,00045. Норма расхода щебня указана 99,1189 м³ на 1000 м³ засыпки</td>
+            <td>Щебень в траншее. По схеме 0,25 × 0,25 × 12,00 = <b>0,75 м³</b>:<br><code>V=0,75/1000 = 0,00075</code>.<br>Норму расхода поставить <b>1000</b> м³/1000 м³ — при засыпке щебнем расход равен объёму</td>
+          </tr>
+          <tr>
+            <td class="c">6</td><td class="c">9</td>
+            <td><q>формулу поправьте</q><br>Записано <code>V=(1,44+4,54)/100</code> = 0,0598, в графе 0,0108</td>
+            <td>Уплотнение. Уплотняются песок и щебень: 0,60 + 0,75 = <b>1,35 м³</b>:<br><code>V=(0,60+0,75)/100 = 0,0135</code></td>
+          </tr>
+          <tr>
+            <td class="c">6</td><td class="c">10</td>
+            <td><q>нельзя закрывать больше, чем в контрактной смете</q>, <q>если закрываете больше — раскрыть в непредвиденных, сделать отд. КС-2 на непредвиденные</q><br>Закрыто 0,009 (1000 м²) = <b class="was">9,00 м²</b> при 7,20 м² по ВОР</td>
+            <td>Снять превышение. Максимум по контракту — 7,20 м², по исполнительной схеме факт 0,25 × 12,00 = <b>3,00 м²</b>.<br>Расценка на слой 3 см, а по схеме уложено 0,15 м — проверить расход смеси (в акте 13,375 т на 1000 м²)</td>
+          </tr>
+          <tr>
+            <td class="c">7</td><td class="c">13</td>
+            <td>то же замечание<br>Засыпка вручную закрыта 0,0108 (100 м³) = <b class="was">1,08 м³</b> при 0,60 м³ по ВОР</td>
+            <td>Привести к <b>0,60 м³</b>: <code>V=0,60/100 = 0,006</code></td>
+          </tr>
+          <tr>
+            <td class="c">15</td><td class="c">—</td>
+            <td><q>сделайте отдельную КС-2</q> — у заголовка сметы № 09-01-01 «Погрузка, вывоз мусора, утилизация»</td>
+            <td>Вынести смету 09-01-01 в самостоятельный акт КС-2 № 2 (мусор). В акте по СМР остаются только сметы 02-01-01</td>
+          </tr>
+          <tr>
+            <td class="c">19</td><td class="c">—</td>
+            <td><q>исправьте КС-2 и сделайте отдельную КС-2 на мусор</q>. Обведены итоги: «Итого в ценах контракта 71 614,68», «НДС 22 % 15 755,23», «ВСЕГО 87 369,91»</td>
+            <td>После правок пересчитать итоги в двух актах. Контрольные суммы — раздел 3</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin:0;font-size:12.5px;color:var(--ink-3)">Красные пары чисел на листах 4—6 (136,91/136,92 · 0,91/0,92 · 1,20/1,21 · 808,01/808,02 · 839,76/839,77 · 242,44/242,45) — расхождения в копейку от округления. Отдельно править не нужно, уйдут при пересчёте.</p>
+  </section>
+
+  <!-- ============ КОНТРОЛЬНЫЙ РАСЧЁТ ============ -->
+  <section class="plate">
+    <div class="plate-head">
+      <span class="plate-num">3</span>
+      <span class="plate-title">Контрольный расчёт итогов</span>
+      <span class="plate-note">проверка сумм заказчика</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Показатель</th><th class="n" style="width:20%">Текущие цены</th><th class="n" style="width:20%">× К = 0,705888</th><th class="n" style="width:20%">+ НДС 22 %</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Раздел 1. Демонтажные работы</td><td class="n">11 058,65</td><td class="n">—</td><td class="n">—</td></tr>
+          <tr><td>Раздел 2. Земляные работы</td><td class="n">9 760,57</td><td class="n">—</td><td class="n">—</td></tr>
+          <tr><td>Раздел 3. Монтажные работы</td><td class="n">69 016,00</td><td class="n">—</td><td class="n">—</td></tr>
+          <tr class="total"><td>СМР по акту сейчас</td><td class="n">89 835,22</td><td class="n">63 413,40</td><td class="n">77 364,35</td></tr>
+          <tr><td>Снять по поз. 10: 2 676,81 × 7,20/9,00</td><td class="n">−535,36</td><td class="n">—</td><td class="n">—</td></tr>
+          <tr><td>Снять по поз. 13: 1 192,86 × 0,60/1,08</td><td class="n">−530,16</td><td class="n">—</td><td class="n">—</td></tr>
+          <tr class="total"><td>СМР после правок → <b>КС-2 № 1</b></td><td class="n">88 769,70</td><td class="n">62 661,40</td><td class="n">76 446,90</td></tr>
+          <tr><td>Смета 09-01-01: мусор 8 680,10 + утилизация 2 938,00</td><td class="n">11 618,10</td><td class="n">8 201,20</td><td class="n">10 005,46</td></tr>
+          <tr class="total"><td>Мусор → <b>КС-2 № 2</b></td><td class="n">11 618,10</td><td class="n">8 201,20</td><td class="n">10 005,46</td></tr>
+          <tr class="total"><td>Всего в КС-3</td><td class="n">100 387,80</td><td class="n">70 862,60</td><td class="n">86 452,36</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="flag">
+      <b>Суммы заказчика сходятся.</b> 76 446,94 и 10 005,31 получаются ровно при приведении позиций 10 и 13 к контрактным объёмам (7,20 м² и 0,60 м³) — расчётные 76 446,90 и 10 005,46 отличаются на копейки из-за округления коэффициента 0,705888. Значит заказчик ждёт КС-2 именно по <b>контрактным</b>, а не по фактическим объёмам. Это и есть вопрос 2 в разделе 5.
+    </div>
+  </section>
+
+  <!-- ============ СВЕРКА ОБЪЁМОВ ============ -->
+  <section class="plate">
+    <div class="plate-head">
+      <span class="plate-num">4</span>
+      <span class="plate-title">Сверка объёмов: ВОР — КС-2 — исполнительная схема</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Работа</th><th class="c" style="width:10%">Ед.</th>
+            <th class="n" style="width:15%">ВОР № 1</th>
+            <th class="n" style="width:15%">КС-2 сейчас</th>
+            <th class="n" style="width:15%">Исп. схема</th>
+            <th class="c" style="width:12%">Сходится</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Разработка траншеи</td><td class="c">м³</td><td class="n">7,20</td><td class="n">1,08</td><td class="n">1,80</td><td class="c was">нет</td></tr>
+          <tr><td>Песок в траншее</td><td class="c">м³</td><td class="n">2,16</td><td class="n">0,36</td><td class="n">0,60</td><td class="c was">нет</td></tr>
+          <tr><td>Щебень в траншее</td><td class="c">м³</td><td class="n">4,54</td><td class="n">0,45</td><td class="n">0,75</td><td class="c was">нет</td></tr>
+          <tr><td>Уплотнение</td><td class="c">м³</td><td class="n">5,98</td><td class="n">1,08</td><td class="n">1,35</td><td class="c was">нет</td></tr>
+          <tr><td>Покрытие холодным асфальтом</td><td class="c">м²</td><td class="n">7,20</td><td class="n">9,00</td><td class="n">3,00</td><td class="c was">нет</td></tr>
+          <tr><td>Труба ПНД d32 в футляре</td><td class="c">м</td><td class="n">12,00</td><td class="n">12,00</td><td class="n">12,00</td><td class="c now">да</td></tr>
+          <tr><td>Труба стальная 76×3,5 — футляр</td><td class="c">м</td><td class="n">15,00</td><td class="n">15,00</td><td class="n">12,00</td><td class="c was">нет</td></tr>
+          <tr><td>Выемка под фундамент шлагбаума</td><td class="c">м³</td><td class="n">1,00</td><td class="n">1,00</td><td class="n">1,00</td><td class="c now">да</td></tr>
+          <tr><td>Щебень под фундамент</td><td class="c">м³</td><td class="n">0,15</td><td class="n">0,15</td><td class="n">0,15</td><td class="c now">да</td></tr>
+          <tr><td>Песок под фундамент</td><td class="c">м³</td><td class="n">—</td><td class="n">—</td><td class="n">есть слой 0,15 м</td><td class="c was">нет</td></tr>
+          <tr><td>Засыпка вокруг фундамента</td><td class="c">м³</td><td class="n">0,60</td><td class="n">1,08</td><td class="n">0,60</td><td class="c was">нет</td></tr>
+          <tr><td>Бетонирование фундамента</td><td class="c">м³</td><td class="n">0,329</td><td class="n">0,329</td><td class="n">0,329</td><td class="c now">да</td></tr>
+          <tr><td>Грунт на утилизацию</td><td class="c">т</td><td class="n">10,64</td><td class="n">10,64</td><td class="n">3,08</td><td class="c was">нет</td></tr>
+          <tr><td>Строительный мусор</td><td class="c">т</td><td class="n">2,325</td><td class="n">2,325</td><td class="n">2,325</td><td class="c now">да</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin:0;font-size:12.5px;color:var(--ink-3)">Грунт на утилизацию по схеме: траншея 1,80 м³ × 1,4 = 2,52 т плюс фундамент 0,40 м³ × 1,4 = 0,56 т, итого 3,08 т против 10,64 т в акте — это самое крупное расхождение по деньгам в смете на мусор.</p>
+  </section>
+
+  <!-- ============ ВОПРОСЫ ============ -->
+  <section class="plate">
+    <div class="plate-head">
+      <span class="plate-num">5</span>
+      <span class="plate-title">Что нужно решить до переделки актов</span>
+    </div>
+    <ol class="q">
+      <li><b>НДС.</b> В КС-2 начислен НДС 22 %, в КС-3 напечатано «НДС не облагается (УСН, ст. 346.11 НК РФ)». Одновременно и то и другое быть не может. Если ИП на УСН является плательщиком НДС — строку в КС-3 заменить на «В том числе НДС 22 %»; если не является — снять начисление в КС-2 и пересчитать итоги (тогда суммы заказчика 76 446,94 и 10 005,31 не сойдутся).</li>
+      <li><b>По каким объёмам закрывать — контрактным или фактическим.</b> Суммы заказчика получаются по контрактным. Но исполнительная схема даёт меньше почти по всем земляным позициям: асфальт 3,00 м² против 7,20, грунт на утилизацию 3,08 т против 10,64. Закрывать больше факта нельзя так же, как и больше контракта. Либо КС-2 приводится к фактическим объёмам и суммы снижаются, либо исполнительная схема пересоставляется по другим обмерам.</li>
+      <li><b>Стальной футляр.</b> В акте закрыто 15,00 м, на исполнительной схеме 12,00 м по длине траншеи. Нужна фактическая длина: она определит и объём по позиции, и цифру на схеме.</li>
+      <li><b>Песок под фундаментом.</b> На схеме слой 0,15 м, в смете отдельной позиции нет — есть только щебёночная подготовка 0,15 м³. Либо работа входит в позицию 6 (устройство подстилающих слоёв из песка), либо её нужно вынести в непредвиденные отдельной КС-2, как и просит заказчик.</li>
+    </ol>
+  </section>
+
+  <div class="foot">
+    <span>Основание: ВОР № 1 от 10.07.2025, ЛСР 02-01-01 и 09-01-01, исполнительная схема № 1</span>
+    <span>Коэффициент пересчёта в цены контракта 0,705888</span>
+  </div>
+
+</div>
