@@ -138,6 +138,38 @@
   @media(max-width:760px){.use-grid{grid-template-columns:1fr}}
   .pull{margin-top:38px;background:var(--yellow);border-radius:var(--r);padding:clamp(26px,4vw,44px);font-family:'Unbounded',system-ui,sans-serif;font-weight:700;font-size:var(--step-2);line-height:1.12;letter-spacing:-.02em;text-wrap:balance}
 
+  /* ---------- цены ---------- */
+  .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px}
+  .price{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:28px 26px;display:flex;flex-direction:column;gap:12px}
+  .price.lead{background:var(--yellow);border-color:var(--ink);border-width:2px}
+  .price .amount{font-family:'Unbounded',system-ui,sans-serif;font-weight:800;font-size:clamp(28px,3.2vw,40px);letter-spacing:-.03em;line-height:1}
+  .price .unit{display:block;font-family:'Golos Text',system-ui,sans-serif;font-weight:600;font-size:16px;letter-spacing:0;opacity:.65;margin-top:7px}
+  @media(max-width:860px){.prices{grid-template-columns:1fr}}
+  .caution{margin-top:24px;border:1.5px dashed var(--ink);border-radius:var(--r);padding:22px 24px;display:flex;flex-direction:column;gap:8px}
+
+  /* ---------- инвестиции ---------- */
+  .invest{background:var(--ink);color:#E4E0D2}
+  .invest h2{color:#fff}
+  .invest .ask{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,52px);align-items:center;margin-top:38px}
+  .invest .sum{font-family:'Unbounded',system-ui,sans-serif;font-weight:800;font-size:clamp(44px,7vw,88px);letter-spacing:-.04em;line-height:1;color:var(--yellow)}
+  .invest .sum span{display:block;font-size:clamp(17px,1.7vw,22px);color:#fff;letter-spacing:-.01em;margin-top:14px}
+  .invest .why{background:#222;border:1px solid #333;border-radius:var(--r);padding:26px;display:flex;flex-direction:column;gap:16px}
+  .invest .why div{display:flex;gap:13px;align-items:flex-start}
+  .invest .why b{color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:600;flex:none;font-size:14px;padding-top:2px}
+  .steps-money{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+  .money{background:#222;border:1px solid #333;border-radius:var(--r);padding:24px 22px;display:flex;flex-direction:column;gap:10px}
+  .money.first{background:var(--yellow);border-color:var(--yellow);color:var(--ink)}
+  .money .num{color:var(--orange)}
+  .money.first .num{color:var(--ink)}
+  .money b{font-family:'Unbounded',system-ui,sans-serif;font-weight:700;font-size:17px;letter-spacing:-.01em;color:#fff}
+  .money.first b{color:var(--ink)}
+  .money .sub{color:#9A9484;font-size:var(--step--1);line-height:1.5}
+  .money.first .sub{color:#4A431C}
+  .money .cost{margin-top:auto;padding-top:12px;border-top:1px solid #333;font-weight:600}
+  .money.first .cost{border-top-color:rgba(21,21,21,.25)}
+  @media(max-width:980px){.steps-money{grid-template-columns:repeat(2,1fr)}.invest .ask{grid-template-columns:1fr}}
+  @media(max-width:560px){.steps-money{grid-template-columns:1fr}}
+
   /* ---------- для команд ---------- */
   .teams{background:var(--olive);color:#F3F1E6}
   .teams h2{color:#fff}
@@ -229,7 +261,9 @@
     <nav class="main">
       <a href="#idea">Идея</a>
       <a href="#formats">Форматы</a>
+      <a href="#prices">Цены</a>
       <a href="#teams">Для команд</a>
+      <a href="#invest">Инвестиции</a>
       <a href="#faq">Вопросы</a>
     </nav>
     <button class="btn small" data-open="lead" data-src="header">Узнать о запуске</button>
@@ -341,7 +375,35 @@
     </div>
   </section>
 
-  <section class="problem">
+  <section class="problem" id="prices">
+    <div class="wrap">
+      <h2>Сколько это будет стоить</h2>
+      <p class="lede" style="margin-top:22px">Окончательной цены пока нет: она сложится из рецептуры, упаковки и условий производства. Ниже — рабочие ориентиры, на которых мы считаем экономику проекта.</p>
+      <div class="prices">
+        <div class="price lead">
+          <span class="mono">Одна порция</span>
+          <span class="amount">180–250 ₽<span class="unit">за порцию</span></span>
+          <p class="note" style="color:var(--ink)">Опорный ориентир — около 200 ₽: сопоставимо с перекусом в кофейне и заметно дешевле доставки обеда.</p>
+        </div>
+        <div class="price">
+          <span class="mono">Набор на неделю</span>
+          <span class="amount">850–1 150 ₽<span class="unit">за 5 порций</span></span>
+          <p class="note">Формат «положил в стол и забыл». За счёт набора порция обходится дешевле, чем поштучно.</p>
+        </div>
+        <div class="price">
+          <span class="mono">Для организаций</span>
+          <span class="amount">150–190 ₽<span class="unit">за порцию</span></span>
+          <p class="note">Ориентир для поставок в офисы и коворкинги от 50 порций. Условия обсуждаем индивидуально.</p>
+        </div>
+      </div>
+      <div class="caution">
+        <span class="mono" style="color:var(--orange)">Важно понимать</span>
+        <p class="note" style="max-width:78ch">Это гипотезы для расчёта, а не прайс-лист: купить продукт сейчас нельзя. Цифры уточнятся, когда будут готовы рецептура и расчёт себестоимости, и могут отличаться по форматам. Мы показываем их, чтобы разговор о проекте шёл на конкретных числах, а не на ощущениях.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
     <div class="wrap">
       <h2>Меньше хлопот вокруг еды</h2>
       <div class="use-grid">
@@ -382,6 +444,51 @@
     </div>
   </section>
 
+  <section class="invest" id="invest">
+    <div class="wrap">
+      <span class="eyebrow mono" style="background:var(--yellow);color:var(--ink)">Для инвестора</span>
+      <h2 style="margin-top:22px">Что нужно для запуска</h2>
+      <div class="ask">
+        <div>
+          <p class="sum">500 000 ₽<span>на первый шаг — проверку спроса</span></p>
+          <p class="note" style="color:#B5B0A0;margin-top:20px;max-width:44ch">Дальше деньги заходят траншами по потребности: следующий транш выдаётся только под достигнутый результат предыдущего.</p>
+        </div>
+        <div class="why">
+          <div><b>01</b><p class="note" style="color:#C9C4B4">Риск ограничен размером транша. Не подтвердилась гипотеза — следующий транш просто не выдаётся.</p></div>
+          <div><b>02</b><p class="note" style="color:#C9C4B4">Деньги не лежат без дела: каждый транш привязан к конкретной работе, а не к «запуску бренда» вообще.</p></div>
+          <div><b>03</b><p class="note" style="color:#C9C4B4">Свой завод не нужен: производство контрактное, капитал идёт в рецептуру, первые партии и проверку спроса.</p></div>
+        </div>
+      </div>
+      <div class="steps-money">
+        <div class="money first">
+          <span class="num mono">Шаг 1 — сейчас</span>
+          <b>Проверка спроса</b>
+          <p class="sub">Лендинг, интервью, трафик, выбор формата. Подтверждаем: заявки, стоимость контакта, качество интереса.</p>
+          <p class="cost">500 000 ₽</p>
+        </div>
+        <div class="money">
+          <span class="num mono">Шаг 2</span>
+          <b>Рецептура и образцы</b>
+          <p class="sub">Работа с технологом и лабораторией. Подтверждаем: рабочая рецептура и характеристики продукта.</p>
+          <p class="cost">уточняется после шага 1</p>
+        </div>
+        <div class="money">
+          <span class="num mono">Шаг 3</span>
+          <b>Пробная партия</b>
+          <p class="sub">Контрактное производство, упаковка, тестирование. Подтверждаем: повторная оплаченная покупка.</p>
+          <p class="cost">уточняется после шага 2</p>
+        </div>
+        <div class="money">
+          <span class="num mono">Шаг 4</span>
+          <b>Первая партия в продажу</b>
+          <p class="sub">Выход в каналы: сайт, сообщества, офисы и коворкинги. Подтверждаем: экономика единицы продукта.</p>
+          <p class="cost">уточняется после шага 3</p>
+        </div>
+      </div>
+      <p class="note" style="color:#9A9484;margin-top:26px;max-width:82ch">Бюджеты шагов 2–4 мы намеренно не выдумываем: они считаются после предыдущего шага. Критерий успеха всего проекта — повторная оплаченная покупка с жизнеспособной экономикой, а не разовый интерес к смешному названию.</p>
+    </div>
+  </section>
+
   <section class="problem" id="faq">
     <div class="wrap">
       <h2>Частые вопросы</h2>
@@ -391,7 +498,7 @@
         <details><summary>Нужно ли что-то готовить?</summary><p>Зависит от формата. Порошок предполагается смешивать с водой, лапшу — заваривать кипятком. Гранулы, снеки и кубики задуманы для употребления без приготовления.</p></details>
         <details><summary>Что будет в составе?</summary><p>Окончательные рецептуры ещё разрабатываются. Подтверждённые состав, пищевую ценность и информацию об аллергенах опубликуем до начала продаж.</p></details>
         <details><summary>Можно ли уже купить?</summary><p>Пока нет: сейчас проект на стадии концепции. Можно оставить контакт, чтобы узнать о возможностях тестирования и запуске.</p></details>
-        <details><summary>Сколько будет стоить?</summary><p>Цена пока не утверждена. Она будет зависеть от выбранного формата, рецептуры, упаковки и производства.</p></details>
+        <details><summary>Сколько будет стоить?</summary><p>Цена пока не утверждена — она будет зависеть от формата, рецептуры, упаковки и производства. Рабочий ориентир, с которым мы считаем экономику, — около 200 ₽ за порцию; подробнее в разделе «Сколько это будет стоить».</p></details>
         <details><summary>Будут ли все пять вариантов?</summary><p>Пока это варианты для проверки интереса. Формат первой партии будет выбран после исследования спроса и разработки продукта.</p></details>
       </div>
     </div>
@@ -414,7 +521,7 @@
     </div>
     <div>
       <div class="fnav">
-        <a href="#idea">Идея</a><a href="#formats">Форматы</a><a href="#teams">Для команд</a><a href="#faq">Вопросы</a>
+        <a href="#idea">Идея</a><a href="#formats">Форматы</a><a href="#prices">Цены</a><a href="#teams">Для команд</a><a href="#invest">Инвестиции</a><a href="#faq">Вопросы</a>
       </div>
       <p class="disc">Изображения на странице — сгенерированные концепты упаковки. Надписи на них не являются подтверждённой спецификацией продукта.</p>
     </div>
