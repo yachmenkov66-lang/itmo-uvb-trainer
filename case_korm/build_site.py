@@ -12,6 +12,24 @@ import os
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "site.src.html")
 DST = os.path.join(HERE, "index.html")
+DST_LOCAL = os.path.join(HERE, "Корм для людей — сайт.html")
+
+# Артефакт сам оборачивает страницу в doctype/head/body, а для локального
+# файла это нужно дописать: без явной кодировки браузер может испортить
+# кириллицу, без viewport — сломать вёрстку на телефоне.
+SHELL = """<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Корм для людей — удобная еда для плотного расписания. Пять форматов одной идеи. Проект на стадии концепции.">
+{head}
+</head>
+<body>
+{body}
+</body>
+</html>
+"""
 
 IMAGES = {
     "{{IMG_GRANULES}}": "product-granules.webp",
@@ -37,6 +55,12 @@ def main():
     with open(DST, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"saved: {DST}  ({os.path.getsize(DST) / 1024 / 1024:.2f} МБ)")
+
+    # самостоятельная версия для локального компьютера и любого хостинга
+    split = html.index("</style>") + len("</style>")
+    with open(DST_LOCAL, "w", encoding="utf-8") as f:
+        f.write(SHELL.format(head=html[:split].strip(), body=html[split:].strip()))
+    print(f"saved: {DST_LOCAL}  ({os.path.getsize(DST_LOCAL) / 1024 / 1024:.2f} МБ)")
 
 
 if __name__ == "__main__":
