@@ -1,0 +1,650 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+<title>Корм для людей</title>
+<style>
+  :root{
+    color-scheme: light;
+    --paper:#F6F3EB;
+    --paper-2:#EFEADB;
+    --paper-3:#E7E1CE;
+    --ink:#151515;
+    --muted:#6E695C;
+    --line:#DED6C2;
+    --yellow:#FFD600;
+    --olive:#526333;
+    --orange:#DE702D;
+    --shadow: 0 18px 50px -28px rgba(30,26,10,.45);
+    --r: 20px;
+    --step--1: clamp(13px, .82rem + .1vw, 14px);
+    --step-0: clamp(16px, .98rem + .12vw, 18px);
+    --step-1: clamp(19px, 1.1rem + .45vw, 24px);
+    --step-2: clamp(24px, 1.25rem + 1.2vw, 34px);
+    --step-3: clamp(30px, 1.4rem + 2.4vw, 52px);
+    --step-4: clamp(36px, 1.5rem + 4.4vw, 76px);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--paper);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");
+    color:var(--ink);
+    font-family:'Golos Text','Segoe UI',system-ui,sans-serif;
+    font-size:var(--step-0);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Unbounded','Arial Black',system-ui,sans-serif;font-weight:800;line-height:1.02;letter-spacing:-.02em;text-wrap:balance;margin:0}
+  h1{font-size:var(--step-4)}
+  h2{font-size:var(--step-3)}
+  h3{font-size:var(--step-1);letter-spacing:-.01em}
+  p{margin:0}
+  img{max-width:100%;height:auto;display:block}
+  a{color:inherit}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;text-transform:uppercase;letter-spacing:.09em;font-size:var(--step--1)}
+
+  .wrap{width:100%;max-width:1180px;margin-inline:auto;padding-inline:20px}
+  section{padding-block:clamp(56px,7vw,110px)}
+  .lede{font-size:var(--step-1);color:var(--muted);max-width:60ch}
+
+  /* ---------- служебная полоса о стадии проекта ---------- */
+  .ribbon{background:var(--ink);color:var(--paper);padding-block:9px}
+  .ribbon .wrap{display:flex;gap:10px 18px;align-items:center;flex-wrap:wrap;justify-content:center;text-align:center}
+  .ribbon .dot{width:8px;height:8px;border-radius:50%;background:var(--yellow);flex:none}
+
+  /* ---------- шапка ---------- */
+  header.top{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  header.top .wrap{display:flex;align-items:center;gap:16px;min-height:68px}
+  .logo{font-family:'Unbounded',system-ui,sans-serif;font-weight:800;font-size:19px;letter-spacing:-.03em;line-height:1;text-decoration:none;margin-right:auto}
+  .logo span{display:block;font-size:11px;letter-spacing:.1em;font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--muted);margin-top:3px;text-transform:uppercase}
+  nav.main{display:flex;gap:22px}
+  nav.main a{text-decoration:none;font-weight:500;padding:6px 0;border-bottom:2px solid transparent}
+  nav.main a:hover{border-bottom-color:var(--yellow)}
+  @media(max-width:860px){nav.main{display:none}}
+  @media(max-width:480px){.logo{font-size:16px;white-space:nowrap}.logo span{font-size:10px}.btn.small{padding:10px 15px;font-size:14px}}
+
+  /* ---------- кнопки ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    font-family:'Golos Text',system-ui,sans-serif;font-weight:600;font-size:16px;
+    padding:14px 24px;border-radius:999px;border:2px solid var(--ink);
+    background:var(--ink);color:var(--paper);cursor:pointer;text-decoration:none;
+    transition:transform .16s ease, background .16s ease, color .16s ease;
+  }
+  .btn:hover{transform:translateY(-2px)}
+  .btn.yellow{background:var(--yellow);color:var(--ink)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:var(--paper)}
+  .btn.small{padding:11px 18px;font-size:15px}
+  .btn[disabled]{opacity:.55;cursor:not-allowed;transform:none}
+  :focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:4px}
+
+  /* ---------- первый экран ---------- */
+  .hero{padding-block:clamp(40px,5vw,72px) clamp(48px,6vw,96px)}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,56px);align-items:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;background:var(--yellow);padding:8px 15px;border-radius:999px}
+  .hero h1{margin-block:22px 0}
+  .mark{background:var(--yellow);border-radius:10px;padding:0 .1em .04em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .hero .lede{margin-top:22px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .stage-note{margin-top:20px;color:var(--muted);display:flex;align-items:center;gap:9px}
+  .hero-art{position:relative;display:grid;place-items:center}
+  .hero-art img{position:relative;width:100%;max-width:540px;aspect-ratio:1;object-fit:contain;border-radius:24px;filter:drop-shadow(0 26px 40px rgba(40,34,8,.22))}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-art{order:-1}.hero-art img{max-width:420px}}
+
+  /* ---------- проблема ---------- */
+  .problem{background:var(--paper-2);border-block:1px solid var(--line)}
+  .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px}
+  .case{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:26px 24px;display:flex;flex-direction:column;gap:10px}
+  .case .mono{color:var(--orange)}
+  .case b{font-family:'Unbounded',system-ui,sans-serif;font-size:var(--step-1);font-weight:700;letter-spacing:-.01em}
+  @media(max-width:760px){.cases{grid-template-columns:1fr}}
+
+  /* ---------- форматы ---------- */
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+  .chip{display:inline-flex;align-items:center;gap:9px;border-radius:999px;padding:8px 15px;border:1.5px solid var(--ink);background:var(--paper)}
+  .chip i{width:10px;height:10px;border-radius:3px;display:block;flex:none}
+  .i-water{background:var(--yellow)}
+  .i-boil{background:var(--orange)}
+  .i-ready{background:var(--olive)}
+
+  .format{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,60px);align-items:center;padding-block:clamp(34px,4vw,52px);border-top:1px solid var(--line)}
+  .format:nth-child(even) .format-art{order:2}
+  .format-art{position:relative;border-radius:26px;background:var(--paper-2);border:1px solid var(--line);padding:14px;display:grid;place-items:center}
+  .format-art img{width:100%;aspect-ratio:1;object-fit:contain;border-radius:16px}
+  .format-body{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+  .format-body h3{font-size:var(--step-2);font-weight:800}
+  .format-body p{max-width:46ch}
+  .note{color:var(--muted);font-size:var(--step--1);line-height:1.5;max-width:46ch}
+  .tag{display:inline-flex;align-items:center;gap:9px;border-radius:999px;padding:7px 14px;color:var(--paper)}
+  .tag.water{background:#8a7400}
+  .tag.boil{background:var(--orange)}
+  .tag.ready{background:var(--olive)}
+  .picked{display:none;align-items:center;gap:8px;color:var(--olive);font-weight:600}
+  .format.is-picked .picked{display:inline-flex}
+  @media(max-width:860px){
+    .format{grid-template-columns:1fr;gap:22px}
+    .format:nth-child(even) .format-art{order:0}
+  }
+
+  /* ---------- польза ---------- */
+  .use-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px}
+  .use{padding:28px 24px;border-radius:var(--r);background:var(--paper-2);border:1px solid var(--line)}
+  .use h3{margin-bottom:10px}
+  @media(max-width:760px){.use-grid{grid-template-columns:1fr}}
+  .pull{margin-top:38px;background:var(--yellow);border-radius:var(--r);padding:clamp(26px,4vw,44px);font-family:'Unbounded',system-ui,sans-serif;font-weight:700;font-size:var(--step-2);line-height:1.12;letter-spacing:-.02em;text-wrap:balance}
+
+  /* ---------- для команд ---------- */
+  .teams{background:var(--olive);color:#F3F1E6}
+  .teams h2{color:#fff}
+  .teams .lede{color:#DCE0CB}
+  .teams-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,4vw,56px);align-items:center}
+  .teams .btn{border-color:var(--yellow);background:var(--yellow);color:var(--ink);margin-top:26px}
+  .teams-list{display:flex;flex-direction:column;gap:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);border-radius:var(--r);padding:26px}
+  .teams-list div{display:flex;gap:12px;align-items:flex-start}
+  .teams-list span{color:var(--yellow);font-family:'JetBrains Mono',monospace;flex:none}
+  @media(max-width:860px){.teams-grid{grid-template-columns:1fr}}
+
+  /* ---------- стадия ---------- */
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:40px}
+  .step{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:22px 20px;display:flex;flex-direction:column;gap:10px}
+  .step .num{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--orange)}
+  .step b{font-size:17px}
+  .step.now{border-color:var(--ink);border-width:2px;background:var(--yellow)}
+  .step.now .num{color:var(--ink)}
+  @media(max-width:980px){.steps{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.steps{grid-template-columns:1fr}}
+
+  /* ---------- FAQ ---------- */
+  .faq{max-width:860px;margin-top:36px;border-top:1px solid var(--line)}
+  details{border-bottom:1px solid var(--line)}
+  summary{cursor:pointer;list-style:none;padding:22px 44px 22px 0;position:relative;font-family:'Unbounded',system-ui,sans-serif;font-weight:600;font-size:var(--step-1);letter-spacing:-.01em}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:6px;top:50%;translate:0 -50%;font-family:'JetBrains Mono',monospace;font-size:26px;color:var(--orange);transition:rotate .2s ease}
+  details[open] summary::after{rotate:45deg}
+  details p{padding-bottom:22px;max-width:64ch;color:var(--muted)}
+
+  /* ---------- финал ---------- */
+  .final{background:var(--yellow);border-block:2px solid var(--ink)}
+  .final .wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:20px}
+  .final h2{font-size:var(--step-4)}
+  .final p{max-width:52ch}
+
+  /* ---------- подвал ---------- */
+  footer{background:var(--ink);color:#D9D5C8;padding-block:54px}
+  footer .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:32px}
+  footer a{color:#D9D5C8}
+  footer .fnav{display:flex;flex-wrap:wrap;gap:16px}
+  footer .disc{color:#9A9484;font-size:var(--step--1);line-height:1.6;margin-top:18px}
+  .footer-logo{font-family:'Unbounded',system-ui,sans-serif;font-weight:800;font-size:26px;color:var(--paper);letter-spacing:-.03em}
+  @media(max-width:760px){footer .wrap{grid-template-columns:1fr}}
+
+  /* ---------- модальные окна ---------- */
+  dialog{border:none;padding:0;background:transparent;max-width:min(560px,calc(100vw - 24px));width:100%}
+  dialog::backdrop{background:rgba(21,21,21,.55);backdrop-filter:blur(3px)}
+  .sheet{background:var(--paper);border:2px solid var(--ink);border-radius:22px;padding:clamp(22px,4vw,34px);box-shadow:var(--shadow)}
+  .sheet h3{font-size:var(--step-2);margin-bottom:8px}
+  .sheet .sub{color:var(--muted);margin-bottom:20px}
+  .field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+  .field label{font-weight:600;font-size:15px}
+  .field .hint{color:var(--muted);font-size:14px}
+  input,select,textarea{
+    font:inherit;font-size:16px;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;width:100%;
+  }
+  textarea{min-height:88px;resize:vertical}
+  input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px rgba(255,214,0,.5)}
+  .err{color:#B3311B;font-size:14px;display:none}
+  .field.invalid .err{display:block}
+  .field.invalid input,.field.invalid select{border-color:#B3311B}
+  .sheet-foot{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:22px}
+  .close{position:absolute;top:14px;right:14px;background:var(--paper-2);border:1.5px solid var(--line);width:38px;height:38px;border-radius:50%;font-size:19px;cursor:pointer;line-height:1}
+  .sheet{position:relative}
+  .demo{background:var(--paper-2);border:1px dashed var(--ink);border-radius:14px;padding:14px 16px;font-size:14px;line-height:1.5;color:var(--ink);margin-bottom:20px}
+  .demo b{font-family:'JetBrains Mono',monospace;font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:12px;display:block;margin-bottom:4px}
+  .done{display:none;text-align:center;padding-block:10px}
+  .done .tick{font-size:44px;line-height:1}
+  .sheet.is-done .form-body{display:none}
+  .sheet.is-done .done{display:block}
+
+  .reveal{opacity:1}
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+    @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  }
+</style>
+
+<div class="ribbon">
+  <div class="wrap mono"><span class="dot"></span>Проект на стадии разработки. На изображениях — концепты продукта и упаковки</div>
+</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top">Корм для людей<span>когда не до готовки</span></a>
+    <nav class="main">
+      <a href="#idea">Идея</a>
+      <a href="#formats">Форматы</a>
+      <a href="#teams">Для команд</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+    <button class="btn small" data-open="lead" data-src="header">Узнать о запуске</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div class="reveal">
+        <span class="eyebrow mono">Еда для плотного расписания</span>
+        <h1>Когда не до готовки —<br><span class="mark">корм</span> для людей</h1>
+        <p class="lede">Разрабатываем удобную еду для учёбы, работы и поездок. Пять форматов одной идеи: иметь под рукой запасной вариант.</p>
+        <div class="hero-cta">
+          <a class="btn yellow" href="#formats">Выбрать свой формат</a>
+          <button class="btn ghost" data-open="lead" data-src="hero">Узнать о запуске</button>
+        </div>
+        <p class="stage-note mono"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--orange);display:inline-block"></span>Пока это концепты. Готовим продукт к тестированию</p>
+      </div>
+      <div class="hero-art reveal">
+        <img src="{{IMG_GRANULES}}" width="1254" height="1254" alt="Концепт упаковки «Корм для людей. Гранулы» и миска с гранулами">
+      </div>
+    </div>
+  </section>
+
+  <section class="problem" id="idea">
+    <div class="wrap">
+      <h2>Расписание плотное.<br>Поесть всё равно хочется</h2>
+      <p class="lede" style="margin-top:22px">Пары, дедлайны, созвоны и дорога не всегда оставляют место для обычного обеда. Мы хотим сделать запасной вариант еды, который удобно держать под рукой.</p>
+      <div class="cases">
+        <div class="case"><span class="mono">Между парами</span><b>В рюкзаке</b><p class="note">Окно в сорок минут, очередь в столовой длиннее окна.</p></div>
+        <div class="case"><span class="mono">Рабочий день</span><b>В ящике стола</b><p class="note">Созвон переполз на обед, а доставка приедет через час.</p></div>
+        <div class="case"><span class="mono">Дорога</span><b>В сумке</b><p class="note">Поезд, пересадка, чужой город — готовить негде.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="formats">
+    <div class="wrap">
+      <h2>Одна идея. Пять форматов</h2>
+      <p class="lede" style="margin-top:22px">Изучаем, какой вариант окажется удобнее в жизни. Выбери тот, который тебе интереснее попробовать.</p>
+      <div class="legend">
+        <span class="chip mono"><i class="i-ready"></i>Без приготовления</span>
+        <span class="chip mono"><i class="i-water"></i>Нужна вода</span>
+        <span class="chip mono"><i class="i-boil"></i>Нужен кипяток</span>
+      </div>
+
+      <div class="formats">
+        <article class="format" id="f-granules" data-format="Гранулы — открыл и ешь">
+          <div class="format-art"><img loading="lazy" src="{{IMG_GRANULES}}" width="1254" height="1254" alt="Концепт упаковки гранул и миска с гранулами"></div>
+          <div class="format-body">
+            <span class="tag ready mono">Без приготовления</span>
+            <h3>Открыл и ешь</h3>
+            <p>Тот самый «корм для людей»: порционные кусочки, которые удобно взять с собой.</p>
+            <p class="note">Самый буквальный вариант идеи бренда. Для предполагаемого способа употребления не нужны ни посуда, ни приготовление. Миска на снимке — часть композиции, а не часть продукта.</p>
+            <button class="btn small" data-pick>Мне интересен этот формат</button>
+            <span class="picked mono">✓ Формат отмечен</span>
+          </div>
+        </article>
+
+        <article class="format" id="f-powder" data-format="Порошковая смесь — смешай и выпей">
+          <div class="format-art"><img loading="lazy" src="{{IMG_POWDER}}" width="1254" height="1254" alt="Концепт упаковки порошковой смеси, мерная ложка и шейкер"></div>
+          <div class="format-body">
+            <span class="tag water mono">Нужна вода</span>
+            <h3>Смешай и выпей</h3>
+            <p>Формат для тех, кому удобнее напиток. Добавь воду и смешай в шейкере.</p>
+            <p class="note">Нужны вода и ёмкость для смешивания. Объём воды и время приготовления пока не определены.</p>
+            <button class="btn small" data-pick>Мне интересен этот формат</button>
+            <span class="picked mono">✓ Формат отмечен</span>
+          </div>
+        </article>
+
+        <article class="format" id="f-noodles" data-format="Лапша — добавь горячего">
+          <div class="format-art"><img loading="lazy" src="{{IMG_NOODLES}}" width="1254" height="1254" alt="Концепт стакана лапши быстрого приготовления с приоткрытой крышкой"></div>
+          <div class="format-body">
+            <span class="tag boil mono">Нужен кипяток</span>
+            <h3>Добавь горячего</h3>
+            <p>Формат для тех, кому хочется горячего: залей кипятком и дай настояться.</p>
+            <p class="note">Единственный вариант линейки, которому нужен кипяток. Точное время заваривания укажем после проверки.</p>
+            <button class="btn small" data-pick>Мне интересен этот формат</button>
+            <span class="picked mono">✓ Формат отмечен</span>
+          </div>
+        </article>
+
+        <article class="format" id="f-snacks" data-format="Хрустящие снеки — хрусти между делами">
+          <div class="format-art"><img loading="lazy" src="{{IMG_SNACKS}}" width="1254" height="1254" alt="Концепт упаковки хрустящих снеков со вкусом сметаны и зелени"></div>
+          <div class="format-body">
+            <span class="tag ready mono">Без приготовления</span>
+            <h3>Хрусти между делами</h3>
+            <p>Несладкий хрустящий формат для перерыва между задачами.</p>
+            <p class="note">«Сметана и зелень» — идея вкуса, а не утверждённая рецептура. Этот вариант мы рассматриваем как перекус, а не как полноценную замену обеда.</p>
+            <button class="btn small" data-pick>Мне интересен этот формат</button>
+            <span class="picked mono">✓ Формат отмечен</span>
+          </div>
+        </article>
+
+        <article class="format" id="f-cubes" data-format="Питательные кубики — еда в кубе">
+          <div class="format-art"><img loading="lazy" src="{{IMG_CUBES}}" width="1254" height="1254" alt="Концепт упаковки питательных кубиков и сами кубики"></div>
+          <div class="format-body">
+            <span class="tag ready mono">Без приготовления</span>
+            <h3>Возьми еду в кубе</h3>
+            <p>Компактный формат, который удобно положить в сумку и взять в дорогу.</p>
+            <p class="note">Ингредиенты и текстура ещё не определены. Сколько кубиков составят приём пищи — покажут разработка рецептуры и тестирование.</p>
+            <button class="btn small" data-pick>Мне интересен этот формат</button>
+            <span class="picked mono">✓ Формат отмечен</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="problem">
+    <div class="wrap">
+      <h2>Меньше хлопот вокруг еды</h2>
+      <div class="use-grid">
+        <div class="use"><h3>Выбираешь способ</h3><p class="note">Разные форматы под разные ситуации: где-то есть чайник, где-то только рюкзак и десять минут.</p></div>
+        <div class="use"><h3>Лежит и ждёт</h3><p class="note">Запасной вариант, который заранее положил в стол или сумку и не думаешь о нём до нужного момента.</p></div>
+        <div class="use"><h3>Честные характеристики</h3><p class="note">Состав, пищевую ценность и данные об аллергенах опубликуем после разработки — до начала продаж.</p></div>
+      </div>
+      <p class="pull">Не вместо любимой еды.<br>На случай, когда до неё не добраться.</p>
+    </div>
+  </section>
+
+  <section class="teams" id="teams">
+    <div class="wrap teams-grid">
+      <div>
+        <h2>Запасной вариант еды для вашей команды</h2>
+        <p class="lede" style="margin-top:22px">Рассматриваем пилотные поставки в офисы и коворкинги. Обсудим вашу задачу, удобный формат и возможный объём после подготовки продукта.</p>
+        <button class="btn" data-open="org" data-src="teams">Обсудить пилот</button>
+      </div>
+      <div class="teams-list">
+        <div><span class="mono">01</span><p>Расскажете, как у вас устроен перерыв на еду и чего не хватает.</p></div>
+        <div><span class="mono">02</span><p>Подберём форматы, которые подойдут вашему помещению и графику.</p></div>
+        <div><span class="mono">03</span><p>Вернёмся с условиями пилота, когда продукт будет готов к тестированию.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Сначала проверим идею.<br>Потом запустим продукт</h2>
+      <p class="lede" style="margin-top:22px">Ни один этап ниже не отмечен как пройденный: это порядок работы, а не отчёт о готовности.</p>
+      <div class="steps">
+        <div class="step now"><span class="num mono">Шаг 1 — сейчас</span><b>Интерес покупателей</b><p class="note">Смотрим, какие форматы выбирают и кто готов пробовать.</p></div>
+        <div class="step"><span class="num mono">Шаг 2</span><b>Разработка рецептуры</b><p class="note">Технолог, состав, вкус, форма подачи.</p></div>
+        <div class="step"><span class="num mono">Шаг 3</span><b>Испытания и производство</b><p class="note">Лаборатория, документы, договорённости с производителем.</p></div>
+        <div class="step"><span class="num mono">Шаг 4</span><b>Тестирование</b><p class="note">Пробные партии и обратная связь от первых людей.</p></div>
+        <div class="step"><span class="num mono">Шаг 5</span><b>Решение о запуске</b><p class="note">Выбираем формат первой партии — или возвращаемся к рецептуре.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="problem" id="faq">
+    <div class="wrap">
+      <h2>Частые вопросы</h2>
+      <div class="faq">
+        <details open><summary>Это действительно корм для животных?</summary><p>Нет. «Корм для людей» — название проекта еды для людей. В нём есть самоирония, но продукт разрабатывается именно для человеческого питания.</p></details>
+        <details><summary>Это замена всей обычной еде?</summary><p>Нет. Мы рассматриваем продукт как запасной вариант для отдельных ситуаций, а не как замену разнообразному рациону.</p></details>
+        <details><summary>Нужно ли что-то готовить?</summary><p>Зависит от формата. Порошок предполагается смешивать с водой, лапшу — заваривать кипятком. Гранулы, снеки и кубики задуманы для употребления без приготовления.</p></details>
+        <details><summary>Что будет в составе?</summary><p>Окончательные рецептуры ещё разрабатываются. Подтверждённые состав, пищевую ценность и информацию об аллергенах опубликуем до начала продаж.</p></details>
+        <details><summary>Можно ли уже купить?</summary><p>Пока нет: сейчас проект на стадии концепции. Можно оставить контакт, чтобы узнать о возможностях тестирования и запуске.</p></details>
+        <details><summary>Сколько будет стоить?</summary><p>Цена пока не утверждена. Она будет зависеть от выбранного формата, рецептуры, упаковки и производства.</p></details>
+        <details><summary>Будут ли все пять вариантов?</summary><p>Пока это варианты для проверки интереса. Формат первой партии будет выбран после исследования спроса и разработки продукта.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2>Какой корм выберешь ты?</h2>
+      <p>Выбери формат и оставь контакт, чтобы узнать о возможностях тестирования и первых партиях.</p>
+      <button class="btn" data-open="lead" data-src="final">Узнать о запуске</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="footer-logo">Корм для людей</div>
+      <p class="disc">Концепция продукта. Характеристики и упаковка могут измениться.<br>Прототип лендинга: контакты, реквизиты и документы появятся, когда проект к этому подготовится.</p>
+    </div>
+    <div>
+      <div class="fnav">
+        <a href="#idea">Идея</a><a href="#formats">Форматы</a><a href="#teams">Для команд</a><a href="#faq">Вопросы</a>
+      </div>
+      <p class="disc">Изображения на странице — сгенерированные концепты упаковки. Надписи на них не являются подтверждённой спецификацией продукта.</p>
+    </div>
+  </div>
+</footer>
+
+<dialog id="dlg-lead" aria-labelledby="lead-title">
+  <form method="dialog" class="sheet" id="sheet-lead">
+    <button class="close" type="submit" aria-label="Закрыть">✕</button>
+    <div class="form-body">
+      <h3 id="lead-title">Узнать о запуске</h3>
+      <p class="sub">Оставь контакт — напишем, когда появятся возможности тестирования и первые партии.</p>
+      <div class="demo"><b>Демонстрационный режим</b>Это прототип: сервис приёма заявок ещё не подключён, поэтому данные никуда не уходят. Точка подключения — константа <code>SUBMIT_ENDPOINT</code> в коде страницы.</div>
+      <div class="field">
+        <label for="lead-format">Интересующий формат</label>
+        <select id="lead-format" name="format">
+          <option>Пока не определился</option>
+          <option>Гранулы — открыл и ешь</option>
+          <option>Порошковая смесь — смешай и выпей</option>
+          <option>Лапша — добавь горячего</option>
+          <option>Хрустящие снеки — хрусти между делами</option>
+          <option>Питательные кубики — еда в кубе</option>
+        </select>
+      </div>
+      <div class="field" id="f-contact">
+        <label for="lead-contact">Контакт — email или Telegram</label>
+        <input id="lead-contact" name="contact" placeholder="you@mail.ru или @nickname" autocomplete="email">
+        <span class="hint">Достаточно чего-то одного. Телефон не нужен.</span>
+        <span class="err">Укажи email или Telegram — иначе мы не сможем написать.</span>
+      </div>
+      <div class="field">
+        <label for="lead-name">Имя <span class="hint">— необязательно</span></label>
+        <input id="lead-name" name="name" autocomplete="given-name">
+      </div>
+      <p class="note">Ты оставляешь интерес к запуску. Это не заказ, не оплата и не гарантированное приглашение на дегустацию.</p>
+      <div class="sheet-foot">
+        <button class="btn" type="button" data-submit="lead">Оставить контакт</button>
+        <button class="btn ghost small" type="submit">Отмена</button>
+      </div>
+    </div>
+    <div class="done">
+      <div class="tick">✓</div>
+      <h3 style="margin-block:10px">Форма заполнена верно</h3>
+      <p class="sub" id="lead-done-text"></p>
+      <button class="btn" type="submit">Закрыть</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-org" aria-labelledby="org-title">
+  <form method="dialog" class="sheet" id="sheet-org">
+    <button class="close" type="submit" aria-label="Закрыть">✕</button>
+    <div class="form-body">
+      <h3 id="org-title">Обсудить пилот</h3>
+      <p class="sub">Расскажите про команду — вернёмся с условиями, когда продукт будет готов к тестированию.</p>
+      <div class="demo"><b>Демонстрационный режим</b>Это прототип: сервис приёма заявок ещё не подключён, поэтому данные никуда не уходят. Точка подключения — константа <code>SUBMIT_ENDPOINT</code> в коде страницы.</div>
+      <div class="field" id="f-org"><label for="org-name">Организация</label><input id="org-name" name="org" autocomplete="organization"><span class="err">Напишите название организации.</span></div>
+      <div class="field" id="f-person"><label for="org-person">Контактное лицо</label><input id="org-person" name="person" autocomplete="name"><span class="err">Как к вам обращаться?</span></div>
+      <div class="field" id="f-email"><label for="org-email">Рабочий email</label><input id="org-email" name="email" type="email" autocomplete="email" placeholder="name@company.ru"><span class="err">Проверьте адрес: нужен рабочий email.</span></div>
+      <div class="field"><label for="org-size">Примерное количество участников <span class="hint">— необязательно</span></label><input id="org-size" name="size" inputmode="numeric"></div>
+      <div class="field"><label for="org-comment">Комментарий <span class="hint">— необязательно</span></label><textarea id="org-comment" name="comment" placeholder="Как устроен перерыв на еду, что было бы удобно"></textarea></div>
+      <div class="sheet-foot">
+        <button class="btn" type="button" data-submit="org">Отправить запрос</button>
+        <button class="btn ghost small" type="submit">Отмена</button>
+      </div>
+    </div>
+    <div class="done">
+      <div class="tick">✓</div>
+      <h3 style="margin-block:10px">Форма заполнена верно</h3>
+      <p class="sub" id="org-done-text"></p>
+      <button class="btn" type="submit">Закрыть</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function () {
+  "use strict";
+
+  /* Точка подключения приёма заявок.
+     Пока здесь null — страница честно работает в демонстрационном режиме
+     и ничего никуда не отправляет. Укажите URL своего обработчика
+     (форма, CRM, серверная функция) — и заявки начнут уходить по-настоящему.
+     Примечание: на опубликованном артефакте внешние запросы заблокированы
+     политикой безопасности, поэтому подключать endpoint нужно там,
+     где страница размещена как обычный html-файл. */
+  var SUBMIT_ENDPOINT = null;
+
+  var DEMO_TEXT = "Демонстрационный режим: заявка никуда не отправлена. Чтобы форма заработала, подключите обработчик в константе SUBMIT_ENDPOINT.";
+  var SENT_TEXT = "Спасибо! Мы сохранили ваш интерес. Сообщим о возможностях тестирования и запуске.";
+
+  /* Внутренние события для возможной аналитики.
+     Внешние счётчики намеренно не подключены. */
+  window.kdlEvents = [];
+  function track(name, payload) {
+    window.kdlEvents.push({ event: name, at: new Date().toISOString(), data: payload || {} });
+  }
+
+  var dialogs = { lead: document.getElementById("dlg-lead"), org: document.getElementById("dlg-org") };
+  var lastFocus = null;
+
+  function openDialog(kind, src) {
+    var d = dialogs[kind];
+    if (!d) return;
+    lastFocus = document.activeElement;
+    d.querySelector(".sheet").classList.remove("is-done");
+    if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", "");
+    track("form_open", { form: kind, source: src || "" });
+    var first = d.querySelector("select, input");
+    if (first) setTimeout(function () { first.focus(); }, 40);
+  }
+
+  document.addEventListener("click", function (e) {
+    var opener = e.target.closest("[data-open]");
+    if (opener) { openDialog(opener.getAttribute("data-open"), opener.getAttribute("data-src")); return; }
+
+    var pick = e.target.closest("[data-pick]");
+    if (pick) {
+      var card = pick.closest(".format");
+      var name = card.getAttribute("data-format");
+      document.querySelectorAll(".format").forEach(function (c) { c.classList.remove("is-picked"); });
+      card.classList.add("is-picked");
+      var sel = document.getElementById("lead-format");
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].text === name) { sel.selectedIndex = i; break; }
+      }
+      try { localStorage.setItem("kdl-format", name); } catch (err) {}
+      track("format_pick", { format: name });
+      openDialog("lead", "card");
+      return;
+    }
+
+    var submit = e.target.closest("[data-submit]");
+    if (submit) { handleSubmit(submit.getAttribute("data-submit"), submit); }
+  });
+
+  Object.keys(dialogs).forEach(function (k) {
+    var d = dialogs[k];
+    if (!d) return;
+    d.addEventListener("close", function () {
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    });
+    /* клик по подложке закрывает окно */
+    d.addEventListener("click", function (e) { if (e.target === d) d.close(); });
+  });
+
+  function setInvalid(id, bad) {
+    var f = document.getElementById(id);
+    if (f) f.classList.toggle("invalid", !!bad);
+  }
+
+  function handleSubmit(kind, btn) {
+    if (btn.disabled) return;
+    var data = {}, ok = true;
+
+    if (kind === "lead") {
+      var contact = document.getElementById("lead-contact").value.trim();
+      var valid = /.+@.+\..+/.test(contact) || /^@?[A-Za-z0-9_]{4,}$/.test(contact);
+      setInvalid("f-contact", !valid);
+      if (!valid) { ok = false; document.getElementById("lead-contact").focus(); }
+      data = {
+        format: document.getElementById("lead-format").value,
+        contact: contact,
+        name: document.getElementById("lead-name").value.trim()
+      };
+    } else {
+      var org = document.getElementById("org-name").value.trim();
+      var person = document.getElementById("org-person").value.trim();
+      var email = document.getElementById("org-email").value.trim();
+      setInvalid("f-org", !org);
+      setInvalid("f-person", !person);
+      setInvalid("f-email", !/.+@.+\..+/.test(email));
+      ok = !!org && !!person && /.+@.+\..+/.test(email);
+      if (!ok) {
+        var firstBad = document.querySelector("#sheet-org .field.invalid input");
+        if (firstBad) firstBad.focus();
+      }
+      data = {
+        org: org, person: person, email: email,
+        size: document.getElementById("org-size").value.trim(),
+        comment: document.getElementById("org-comment").value.trim()
+      };
+    }
+    if (!ok) return;
+
+    /* защита от дублей при случайном двойном нажатии */
+    btn.disabled = true;
+    btn.textContent = "Отправляем…";
+
+    send(kind, data).then(function (delivered) {
+      var sheet = document.getElementById(kind === "lead" ? "sheet-lead" : "sheet-org");
+      document.getElementById(kind === "lead" ? "lead-done-text" : "org-done-text").textContent =
+        delivered ? SENT_TEXT : DEMO_TEXT;
+      sheet.classList.add("is-done");
+      /* факт заявки фиксируем только при реальной доставке данных */
+      track(delivered ? (kind === "lead" ? "lead_submitted" : "org_submitted") : "form_demo_submit", data);
+      btn.disabled = false;
+      btn.textContent = kind === "lead" ? "Оставить контакт" : "Отправить запрос";
+    });
+  }
+
+  function send(kind, data) {
+    if (!SUBMIT_ENDPOINT) return Promise.resolve(false);
+    return fetch(SUBMIT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: kind, payload: data })
+    }).then(function (r) { return r.ok; }).catch(function () { return false; });
+  }
+
+  /* восстановить ранее отмеченный формат (удобство, а не заявка) */
+  try {
+    var saved = localStorage.getItem("kdl-format");
+    if (saved) {
+      document.querySelectorAll(".format").forEach(function (c) {
+        if (c.getAttribute("data-format") === saved) c.classList.add("is-picked");
+      });
+      var s = document.getElementById("lead-format");
+      for (var j = 0; j < s.options.length; j++) {
+        if (s.options[j].text === saved) { s.selectedIndex = j; break; }
+      }
+    }
+  } catch (e) {}
+
+  /* просмотр формата — для будущей аналитики */
+  if ("IntersectionObserver" in window) {
+    var seen = {};
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var id = en.target.id;
+        if (en.isIntersecting && !seen[id]) {
+          seen[id] = true;
+          track("format_view", { format: en.target.getAttribute("data-format") });
+        }
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll(".format").forEach(function (f) { io.observe(f); });
+  }
+})();
+</script>
