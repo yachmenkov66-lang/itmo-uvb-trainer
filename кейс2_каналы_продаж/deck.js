@@ -125,6 +125,25 @@ s.addChart(p.ChartType.bar,[{name:'ROAS',labels:['сайт','LaModa','Блоге
   t(s,b2,{x:9.15,y:y+0.35,w:3.55,h:0.85,fontFace:B,fontSize:12,color:GREY});});
 s.addNotes('Разброс в 4,6 раза. Сайт выигрывает не объёмом, а тем, что мы не покупаем клики.');
 
+/* — цена клиента */
+s=p.addSlide(); head(s,'Цена клиента','Сколько стоит привлечь покупателя — и сколько он приносит');
+s.addChart(p.ChartType.bar,[
+ {name:'Цена клиента (CAC)',labels:CH,values:[385,1000,400,750,1429]},
+ {name:'Маржа с заказа',labels:CH,values:[2171,2171,1202,1839,1763]}],
+ Object.assign({},chartBase,{x:0.5,y:1.9,w:8.0,h:4.2,barDir:'col',
+  chartColors:[AMBER,'D7DAE0'],showLegend:true,legendPos:'t',legendFontFace:B,
+  legendFontSize:12,legendColor:INK,dataLabelPosition:'outEnd',
+  dataLabelFormatCode:'#,##0',dataLabelFontSize:10}));
+t(s,'Доля маржи, которую съедает привлечение',{x:8.85,y:1.95,w:3.85,h:0.65,fontFace:B,fontSize:15,bold:true,color:NAVY});
+[['сайт','18%'],['LaModa','33%'],['Блогеры','41%'],['директ','46%'],['ВК','81%']]
+ .forEach(([a,b2],i)=>{const y=2.75+i*0.62;
+  t(s,a,{x:8.85,y,w:2.1,h:0.36,fontFace:B,fontSize:14,color:INK});
+  t(s,b2,{x:10.95,y:y-0.04,w:1.75,h:0.4,fontFace:B,fontSize:19,bold:true,
+    color:i===4?RED:(i===0?AMBER:NAVY),align:'right'});});
+t(s,'У ВК на привлечение уходит 81% маржи — с заказа остаётся 334 ₽. Это не канал, это тест на выживание.',
+  {x:0.6,y:6.35,w:12.1,h:0.4,fontFace:B,fontSize:13,italic:true,color:GREY});
+s.addNotes('CAC — главный тест канала: сравниваем не с нулём, а с маржой. На сайте привлечение съедает 18% маржи, у ВК — 81%.');
+
 /* 7 — эффективность vs деньги */
 s=p.addSlide(); head(s,'Эффективность ≠ деньги','Один и тот же месяц, два разных рейтинга');
 [['По эффективности (ROAS)',['сайт — 5,64','LaModa — 3,01','Блогеры — 2,45','директ — 2,17','ВК — 1,23'],0.6],
@@ -138,6 +157,28 @@ s=p.addSlide(); head(s,'Эффективность ≠ деньги','Один �
     t(s,li,{x:x+0.85,y:2.57+i*0.55,w:4.6,h:0.32,fontFace:B,fontSize:14,color:INK});});});
 band(s,5.45,'Сайт — самый эффективный, но он упёрся в потолок: 260 переходов, SEO деньгами не разгонишь.\nLaModa — самый денежный: берёт объём сразу, платим за это комиссией.',1.4);
 s.addNotes('Главная мысль защиты: у каналов разные роли. Эффективность и объём — не одно и то же.');
+
+/* — кольцевые: бюджет и прибыль */
+s=p.addSlide();
+head(s,'Куда уходит бюджет и откуда приходит прибыль',
+  'Сайт даёт 20% прибыли на 9% бюджета. ВК — 9% прибыли на 19% бюджета');
+const ringColors=[AMBER,'8095B5',NAVY,'3E5C86',RED];
+const ringOpt=v=>({x:v.x,y:2.05,w:5.6,h:3.6,holeSize:55,showLegend:true,legendPos:'b',
+  legendFontFace:B,legendFontSize:12,legendColor:INK,showTitle:true,title:v.title,
+  titleFontFace:B,titleFontSize:15,titleColor:NAVY,showValue:false,showPercent:false,
+  chartColors:ringColors,dataBorder:{pt:2,color:W}});
+s.addChart(p.ChartType.doughnut,[{name:'Затраты',labels:CH,values:[5000,12000,12000,15000,10000]}],
+  ringOpt({x:0.6,title:'Доля в бюджете — 54 000 ₽'}));
+s.addChart(p.ChartType.doughnut,[{name:'Прибыль',labels:CH,values:[28223,26052,36060,36780,12342]}],
+  ringOpt({x:6.85,title:'Доля в прибыли — 139 457 ₽'}));
+[['сайт','9% → 20%',1],['директ','22% → 19%',0],['LaModa','22% → 26%',1],
+ ['Блогеры','28% → 26%',0],['ВК','19% → 9%',-1]]
+ .forEach(([a,b2,up],i)=>{const x=0.6+i*2.45;
+  card(s,x,5.85,2.3,1.0);
+  t(s,a,{x:x+0.2,y:5.99,w:1.9,h:0.3,fontFace:B,fontSize:12,bold:true,color:GREY});
+  t(s,b2,{x:x+0.2,y:6.33,w:1.9,h:0.38,fontFace:B,fontSize:16,bold:true,
+    color:up===1?NAVY:(up===-1?RED:INK)});});
+s.addNotes('Два кольца об одном и том же месяце. Если доля в прибыли больше доли в бюджете — канал недофинансирован. У сайта разрыв вдвое в плюс, у ВК вдвое в минус.');
 
 /* 8 — парадокс LaModa */
 s=p.addSlide(); head(s,'Парадокс LaModa','Лучшая воронка в таблице — и худшая маржа');
