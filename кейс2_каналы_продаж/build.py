@@ -7,7 +7,7 @@ from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
 from openpyxl.utils import get_column_letter
 
 CH       = ["сайт", "директ", "LaModa", "Блогеры", "ВК Канал (Таргет ВК)"]
-pokazy   = [26000, 120000, 6000,  80000, 100000]
+pokazy   = [26000, 120000, 60000, 80000, 100000]
 perehody = [260,   1200,   1800,  1600,  700]
 kliki    = [52,    96,     180,   160,   20]
 prodazhi = [13,    12,     30,    20,    7]
