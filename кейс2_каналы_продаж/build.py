@@ -6,20 +6,20 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
 from openpyxl.utils import get_column_letter
 
-CH       = ["сайт", "директ", "LaModa", "Блогер", "канал n"]
-pokazy   = [28000, 130000, 62000, 85000, 96000]
-perehody = [2100,  1100,   2480,  1700,  768]
-kliki    = [210,   77,     223,   136,   31]
-prodazhi = [40,    12,     28,    20,    3]
-zatr     = [17000, 24000,  18000, 35000, 22000]
+CH       = ["сайт", "директ", "LaModa", "Блогеры", "ВК Канал (Таргет ВК)"]
+pokazy   = [26000, 120000, 6000,  80000, 100000]
+perehody = [260,   1200,   1800,  1600,  700]
+kliki    = [52,    96,     180,   160,   20]
+prodazhi = [13,    12,     30,    20,    7]
+pribyl   = [28223, 26052,  36060, 36780, 12342]
+zatr     = [5000,  12000,  12000, 15000, 10000]
 
-# юнит-экономика из Кейса 1: цена 3390 ₽, себестоимость 851 ₽; у блогера промокод −10%
+# цена из Кейса 1: 3390 ₽ розница, у блогеров промокод −10%
 cena   = [3390, 3390, 3390, 3051, 3390]
 sebes  = 851
-komiss = [368, 368, 1337, 361, 368]          # комиссия площадки + логистика + эквайринг
-marzha = [c - sebes - k for c, k in zip(cena, komiss)]
-pribyl = [m * p for m, p in zip(marzha, prodazhi)]
 vyr    = [c * p for c, p in zip(cena, prodazhi)]
+marzha = [round(pr / p) for pr, p in zip(pribyl, prodazhi)]   # фактическая маржа с заказа
+komiss = [c - sebes - m for c, m in zip(cena, marzha)]        # всё, что съедает канал
 
 N     = len(CH)
 LAST  = get_column_letter(1 + N)          # последняя колонка с каналом
@@ -77,8 +77,8 @@ ws["A20"] = "СПРАВОЧНО — как получена «прибыль с 
 ws["A20"].font = Font(bold=True, size=12)
 ref = [("Цена продажи, ₽", cena, RUB, False),
        ("Себестоимость юнита, ₽ (футболка 780 + принт 46 + упаковка 25)", [sebes]*N, RUB, False),
-       ("Комиссия канала + логистика + эквайринг на 1 заказ, ₽", komiss, RUB, False),
-       ("Маржа с 1 заказа, ₽", marzha, RUB, False),
+       ("Комиссия площадки + логистика + эквайринг на 1 заказ, ₽", komiss, RUB, False),
+       ("Маржа с 1 заказа, ₽ (= прибыль / продажи)", marzha, RUB, False),
        ("Выручка, ₽", vyr, RUB, True)]
 for r, (label, vals, fmt, total) in enumerate(ref, start=21):
     ws.cell(row=r, column=1, value=label)
